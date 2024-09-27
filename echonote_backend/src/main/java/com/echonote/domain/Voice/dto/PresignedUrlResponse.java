@@ -3,6 +3,8 @@ package com.echonote.domain.Voice.dto;
 import lombok.Data;
 
 @Data
-public class S3SaveResponse {
+public class PresignedUrlResponse {
+
 	private String presignedUrl;
+
 }

@@ -6,6 +6,7 @@ import com.echonote.domain.Memo.entity.Memo;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MemoServiceImpl implements MemoService {
 
@@ -51,12 +53,12 @@ public class MemoServiceImpl implements MemoService {
 
                 }
             } catch (DataIntegrityViolationException e) {
-                System.err.println("데이터 무결성 위반: " + e.getMessage());
+                log.error("Memo 데이터 무결성 위반: " + e.getMessage());
             }
         }
     }
 
-    // 메모 삭제하기
+    // 메모 삭제하기(전체 삭제가 아니라 특정 메모만 삭제합니다.)
     @Override
     public void deleteMemo(long id, List<Long> memoId){
         for(long memo : memoId) {
@@ -70,16 +72,22 @@ public class MemoServiceImpl implements MemoService {
                 UpdateResult result = mongoTemplate.updateFirst(query, update, Memo.class);
 
                 if (result.getMatchedCount() > 0) {
-                    System.out.println("메모가 성공적으로 삭제되었습니다: " + memo);
+                    log.info(id + "번 Note " + memo+ "번 memo 삭제");
                 } else {
-                    System.out.println("해당 메모 항목을 찾을 수 없습니다: " + memo);
+                    log.warn(id + "번 Note " + memo+ "번 memo 삭제 실패");
                 }
             } catch (DataIntegrityViolationException e) {
-                System.err.println("데이터 무결성 위반: " + e.getMessage());
+                log.error("memo 데이터 삭제 실패: "+e);
             }
         }
 
     }
+
+    // 전체 메모 삭제
+    public void deleteAllMemo(long id){
+        memoRepository.deleteById(id);
+    }
+
 
     // 특정 ID로 데이터를 가져오기
     @Override
