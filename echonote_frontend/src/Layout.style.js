@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const Layout = styled.div`
   display: flex;
   position: relative; /* 툴바와 독립된 고정 레이아웃 */
-  overflow: hidden;
   height: 100%;
 `;
 

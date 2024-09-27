@@ -33,38 +33,34 @@ export const AnimatedToolBarContent = styled.div.withConfig({
   transition: max-height 0.5s ease, opacity 0.5s ease;
 `;
 
-// 툴바 내용
 export const ToolBarContent = styled.div`
   display: flex;
-  justify-content: center; /* ToolBarButton을 중앙에 배치 */
+  justify-content: center;
   align-items: center;
-  position: relative; /* SideBarButton 위치 고정을 위한 상대 위치 */
+  position: relative;
   margin-top: 7px;
   margin-bottom: 2px;
   width: 100%;
 `;
 
-// 중앙에 위치할 툴바 버튼들
 export const ToolBarButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px; /* 아이콘 사이 간격 */
+  gap: 8px;
 `;
 
-// 세로선 (Divider) 컴포넌트
 export const Divider = styled.div`
   width: 1px;
-  height: 24px; /* 세로선의 높이 */
+  height: 24px;
   background-color: #d3d3d3;
-  margin: 0 10px; /* 세로선의 좌우 간격 */
+  margin: 0 10px;
 `;
 
-// 아이콘 자체에 대한 스타일
 export const ToolBarIcon = styled.div`
   font-size: 15px;
   cursor: pointer;
-  margin: 0 5px; /* 좌우 간격 조정 */
+  margin: 0 5px;
 
   &:hover {
     color: ${(props) => props.theme.colors.iconHover};
@@ -77,53 +73,28 @@ export const ToolBarIcon = styled.div`
 
 // 오른쪽에 위치하는 Collapse 버튼 (SideBarButton)
 export const SideBarButton = styled.div`
-  position: absolute; /* 오른쪽 끝에 고정 */
-  right: 0; /* 오른쪽 끝으로 밀어냄 */
+  position: absolute;
+  right: 0;
   display: flex;
   align-items: center;
 `;
 
-export const CollapseIcon = styled.div.withConfig({
-  shouldForwardProp: shouldNotForwardPropsWithKeys(["isCollapsed"]),
+export const IconButton = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["isActive"].includes(prop), // isActive만 필터링
 })`
   background-color: transparent;
   border: none;
   cursor: pointer;
   font-size: 18px;
   margin: 0 5px;
-  color: ${({ isCollapsed, theme }) =>
-    isCollapsed ? theme.colors.iconColor : theme.colors.iconHover};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.iconHover : theme.colors.iconColor};
 `;
 
-export const PdfIcon = styled.div.withConfig({
-  shouldForwardProp: shouldNotForwardPropsWithKeys(["isPdfBarOpened"]),
-})`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  margin: 0 5px;
-  color: ${({ isPdfBarOpened, theme }) =>
-    isPdfBarOpened ? theme.colors.iconHover : theme.colors.iconColor};
-`;
-
-export const STTIcon = styled.div.withConfig({
-  shouldForwardProp: shouldNotForwardPropsWithKeys(["isSTTBarOpened"]),
-})`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  margin: 0 5px;
-  color: ${({ isSTTBarOpened, theme }) =>
-    isSTTBarOpened ? theme.colors.iconHover : theme.colors.iconColor};
-`;
-
-// 제목 스타일
 export const Title = styled.h1`
   display: flex;
-  align-items: center; /* 세로 중앙 정렬 */
+  align-items: center;
   font-size: 1.2rem;
   color: ${(props) => props.theme.colors.textColor};
-  margin: 0; /* 여백이 있을 경우 제거 */
+  margin: 0;
 `;

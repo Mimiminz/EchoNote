@@ -1,7 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { useWavesurfer } from "@wavesurfer/react";
+import RecordPlugin from "wavesurfer.js/dist/plugins/record.esm.js";
+import { FaPlayCircle, FaPauseCircle, FaStopCircle } from "react-icons/fa";
+import { MdOutlineReplayCircleFilled } from "react-icons/md";
+import { PiRecordFill, PiRecordBold } from "react-icons/pi";
 import { RiSpeedFill } from "react-icons/ri";
-import PropTypes from "prop-types";
 import {
   Timer,
   WaveContainer,
@@ -9,36 +12,84 @@ import {
   SpeedButton,
   SpeedOption,
   AudioContainer,
+  PlayPauseButton,
+  StopReplayButton,
 } from "@components/styles/AudioWave.style";
 
-const AudioWave = ({ audioUrl, isPlaying }) => {
+const AudioWave = () => {
   const containerRef = useRef(null);
   const speedButtonRef = useRef(null);
   const speedBarRef = useRef(null);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [speedBarVisible, setSpeedBarVisible] = useState(false);
-
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(null); // 녹음 파일이 없으면 null
   const playbackRates = [1, 1.25, 1.5, 1.75, 2];
 
-  const { wavesurfer, isReady, currentTime } = useWavesurfer({
+  // Wavesurfer + RecordPlugin 설정
+  const { wavesurfer, currentTime } = useWavesurfer({
     container: containerRef,
     height: 30,
-    barHeight: 5,
+    width: 300,
+    barHeight: 1,
     barWidth: 2,
     waveColor: "rgb(138, 111, 211)",
     progressColor: "rgb(89, 39, 226)",
     cursorWidth: 1,
     barRadius: 5,
-    url: audioUrl,
+    url: audioUrl || null,
+    minPxPerSec: 30,
+    hideScrollbar: true,
+    plugins: useMemo(
+      () => [
+        RecordPlugin.create({
+          renderRecordedAudio: true,
+          scrollingWaveform: true,
+          cursorWidth: 0,
+          barHeight: 5,
+        }),
+      ],
+      [audioUrl]
+    ),
   });
 
-  // AudioContext가 중단되었을 경우 이를 재개하는 함수
-  const resumeAudioContext = async () => {
-    if (wavesurfer && wavesurfer.backend && wavesurfer.backend.ac) {
-      // AudioContext가 suspended 상태인지 확인
-      if (wavesurfer.backend.ac.state === "suspended") {
-        await wavesurfer.backend.ac.resume();
+  const record = useMemo(() => {
+    if (wavesurfer) {
+      const recPlugin = wavesurfer.registerPlugin(RecordPlugin.create());
+      recPlugin.on("record-end", (blob) => {
+        const recordedUrl = URL.createObjectURL(blob);
+        setAudioUrl(recordedUrl);
+        setIsRecording(false);
+      });
+      return recPlugin;
+    }
+  }, [wavesurfer]);
+
+  const togglePlayPause = () => {
+    if (!wavesurfer) return;
+    setIsPlaying(!isPlaying);
+    wavesurfer.playPause();
+  };
+
+  const handleStartStopRecording = async () => {
+    try {
+      // 마이크 접근 권한 요청
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // 장치 탐색
+      const devices = await RecordPlugin.getAvailableAudioDevices();
+      const deviceId = devices[0]?.deviceId;
+
+      if (isRecording) {
+        record?.stopRecording();
+        setIsRecording(false);
+      } else {
+        record?.startRecording({ deviceId });
+        setIsRecording(true);
       }
+    } catch (error) {
+      console.error("Error accessing microphone or starting recording", error);
     }
   };
   const handleSpeedChange = (speed) => {
@@ -51,7 +102,6 @@ const AudioWave = ({ audioUrl, isPlaying }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // SpeedButton이나 SpeedBarContainer 외부를 클릭했을 때 배속 바 닫기
       if (
         speedButtonRef.current &&
         !speedButtonRef.current.contains(event.target) &&
@@ -69,21 +119,24 @@ const AudioWave = ({ audioUrl, isPlaying }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (isReady && wavesurfer) {
-      resumeAudioContext();
-      if (isPlaying) {
-        wavesurfer.play();
-      } else {
-        wavesurfer.pause();
-      }
-    }
-  }, [isPlaying, isReady, wavesurfer]);
-
   return (
     <AudioContainer>
+      {audioUrl ? (
+        <PlayPauseButton onClick={togglePlayPause}>
+          {isPlaying ? <FaPauseCircle /> : <FaPlayCircle />}
+        </PlayPauseButton>
+      ) : (
+        <PlayPauseButton onClick={handleStartStopRecording}>
+          {isRecording ? <PiRecordFill /> : <PiRecordBold />}
+        </PlayPauseButton>
+      )}
+
       <WaveContainer ref={containerRef} />
-      <Timer>{new Date(currentTime * 1000).toISOString().substr(14, 5)}</Timer>
+
+      <Timer>
+        {new Date(currentTime * 1000).toISOString().substring(14, 19)}
+      </Timer>
+
       <SpeedButton
         ref={speedButtonRef}
         onClick={() => setSpeedBarVisible(!speedBarVisible)}
@@ -103,13 +156,12 @@ const AudioWave = ({ audioUrl, isPlaying }) => {
           </SpeedOption>
         ))}
       </SpeedBarContainer>
+
+      <StopReplayButton onClick={handleStartStopRecording}>
+        {audioUrl ? <MdOutlineReplayCircleFilled /> : <FaStopCircle />}
+      </StopReplayButton>
     </AudioContainer>
   );
-};
-
-AudioWave.propTypes = {
-  audioUrl: PropTypes.string.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
 };
 
 export default AudioWave;

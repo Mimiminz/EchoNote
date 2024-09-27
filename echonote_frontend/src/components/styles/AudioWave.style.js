@@ -36,7 +36,7 @@ export const SpeedBarContainer = styled.div.withConfig({
   opacity: ${(props) => (props.visible ? "1" : "0")};
   transform: ${(props) =>
     props.visible ? "translateY(0)" : "translateY(10px)"};
-  transition: opacity 0.2s ease, transform 0.2s ease; /* 부드러운 전환 효과 */
+  transition: opacity 0.2s ease, transform 0.2s ease;
 `;
 
 export const SpeedButton = styled.button`
@@ -46,9 +46,10 @@ export const SpeedButton = styled.button`
   color: ${(props) => props.theme.colors.recordButton};
   cursor: pointer;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  position: relative;
-  gap: 3px;
+  min-width: 56px;
+  padding: 0;
 `;
 
 export const SpeedOption = styled.div`
@@ -67,4 +68,26 @@ export const SpeedOption = styled.div`
     background-color: #666666;
     color: ${(props) => props.theme.colors.textLightColor};
   }
+`;
+
+export const PlayPauseButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.recordButton};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 27px;
+`;
+
+export const StopReplayButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.recordButton};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 29px;
 `;

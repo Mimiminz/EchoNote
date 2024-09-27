@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { shouldNotForwardPropsWithKeys } from "@shared/utils/shouldForwardProp";
 
-export const RecordingBarContainer = styled.div`
+export const RecordingBarContainer = styled.div.withConfig({
+  shouldForwardProp: shouldNotForwardPropsWithKeys(["isOpened"]),
+})`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,6 +19,11 @@ export const RecordingBarContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+
+  opacity: ${(props) => (props.isOpened ? "1" : "0")};
+  transform: ${(props) =>
+    props.isOpened ? "translateX(-50%)" : "translateX(-50%) translateY(-20px)"};
+  transition: opacity 0.3s ease, transform 0.3s ease;
 `;
 
 export const PlayPauseButton = styled.button`
@@ -27,17 +35,6 @@ export const PlayPauseButton = styled.button`
   justify-content: center;
   cursor: pointer;
   font-size: 27px;
-`;
-
-export const StopReplayButton = styled.button`
-  border: none;
-  background-color: transparent;
-  color: ${(props) => props.theme.colors.recordButton};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 29px;
 `;
 
 export const IconButton = styled.button`

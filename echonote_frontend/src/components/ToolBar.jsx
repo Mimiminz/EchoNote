@@ -4,7 +4,6 @@ import { FaPen, FaTextHeight, FaImage, FaShapes, FaStar } from "react-icons/fa";
 import { BiWindowAlt, BiChevronsDown, BiChevronsUp } from "react-icons/bi";
 import { IoMicSharp } from "react-icons/io5";
 import useSidebarStore from "@stores/sideBarStore";
-import PropTypes from "prop-types";
 import {
   Divider,
   ToolBarContainer,
@@ -12,17 +11,21 @@ import {
   ToolBarContent,
   ToolBarButton,
   Title,
-  CollapseIcon,
-  PdfIcon,
+  IconButton,
   ToolBarIcon,
   SideBarButton,
   AnimatedToolBarContent,
-  STTIcon,
 } from "@components/styles/ToolBar.style";
 
 const ToolBar = () => {
-  const { isPdfBarOpened, isSTTBarOpened, togglePdfBar, toggleSTTBar } =
-    useSidebarStore();
+  const {
+    isPdfBarOpened,
+    isSTTBarOpened,
+    togglePdfBar,
+    toggleSTTBar,
+    isRecordingBarOpened,
+    toggleRecordingBar,
+  } = useSidebarStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapse = () => {
@@ -42,7 +45,11 @@ const ToolBar = () => {
 
       <ToolBarContent>
         <ToolBarButton>
-          <ToolBarIcon as={IoMicSharp} />
+          <IconButton
+            as={IoMicSharp}
+            onClick={toggleRecordingBar}
+            isActive={isRecordingBarOpened}
+          />
           <Divider />
           <ToolBarIcon as={FaPen} />
           <ToolBarIcon as={FaTextHeight} />
@@ -50,27 +57,27 @@ const ToolBar = () => {
           <ToolBarIcon as={FaShapes} />
         </ToolBarButton>
         <SideBarButton>
-          <PdfIcon
+          <IconButton
             as={BiWindowAlt}
             onClick={togglePdfBar}
-            isPdfBarOpened={isPdfBarOpened}
+            isActive={isPdfBarOpened}
           />
-          <STTIcon
+          <IconButton
             as={RiSpeakLine}
             onClick={toggleSTTBar}
-            isSTTBarOpened={isSTTBarOpened}
+            isActive={isSTTBarOpened}
           />
           {isCollapsed ? (
-            <CollapseIcon
+            <IconButton
               as={BiChevronsUp}
               onClick={toggleCollapse}
-              isCollapsed={isCollapsed}
+              isActive={!isCollapsed}
             />
           ) : (
-            <CollapseIcon
+            <IconButton
               as={BiChevronsDown}
               onClick={toggleCollapse}
-              isCollapsed={isCollapsed}
+              isActive={!isCollapsed}
             />
           )}
         </SideBarButton>
