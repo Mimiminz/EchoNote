@@ -7,6 +7,7 @@ import PdfBar from "@components/PdfBar";
 import RecordingBar from "@components/RecordingBar";
 import { Layout, MainContent, rootStyle, appStyle } from "@/Layout.style";
 import STTBar from "@components/STTBar";
+import PenToolBar from "@components/PenToolBar";
 
 class App extends Component {
   state = {
@@ -40,6 +41,7 @@ class App extends Component {
                 <p>페이지 내용이 여기에 들어갑니다.</p>
               </MainContent>
               <STTBar />
+              <PenToolBar />
             </Layout>
           </ThemeProvider>
         </div>
