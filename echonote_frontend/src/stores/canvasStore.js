@@ -92,6 +92,26 @@ const canvasStore = create((set, get) => ({
       redoStacks: { ...state.redoStacks, [page]: [] },
     }));
   },
+
+  // api 요청 보낼 구조로 변경
+  getFormattedData: () => {
+    const paths = get().savedCanvasPaths;
+    const records = get().savedCanvasRecords;
+
+    const result = {};
+
+    Object.keys(paths).forEach((page) => {
+      result[page] = paths[page].map((path, index) => ({
+        id: index,
+        detail: JSON.stringify({
+          paths: path,
+          timeStamp: records[page] ? records[page][index] : null,
+        }),
+      }));
+    });
+
+    return result;
+  },
 }));
 
 export default canvasStore;
