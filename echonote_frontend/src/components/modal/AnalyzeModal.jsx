@@ -35,11 +35,17 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
   const [isVisible, setIsVisible] = useState(isOpen);
   const [hex, setHex] = useState("#fff");
   const [isOn, setisOn] = useState(false);
-  const { sttKeyword, currentKeyword, setCurrentKeyword, toggleKeyword } =
-    useSearchStore();
+  const {
+    sttKeyword,
+    currentKeyword,
+    setCurrentKeyword,
+    toggleKeyword,
+    toggleAnalyzed,
+  } = useSearchStore();
 
   const toggleHandler = () => {
     setisOn(!isOn);
+    toggleAnalyzed();
   };
 
   const toggleKeywordHandler = () => {

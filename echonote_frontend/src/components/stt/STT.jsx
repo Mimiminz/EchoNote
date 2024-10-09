@@ -155,7 +155,7 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
         start: segment.start,
         end: segment.end,
         text: newText,
-        anomaly: false,
+        anomaly: segment.anomaly,
       };
 
       const exists = modifiedTexts.find((item) => item.id === segmentId);
@@ -207,6 +207,9 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
                 onBlur={(e) => handleTextChange(segment.id, e.target.innerText)}
                 suppressContentEditableWarning={true} // Prevent warning
                 $isEditMode={isEditMode}
+                style={{
+                  fontWeight: segment.anomaly ? "bold" : "normal", // anomaly일 경우 bold 처리
+                }}
               >
                 {highlightText(segment.text, index)} {/* 검색어 하이라이트 */}
               </ResultText>
