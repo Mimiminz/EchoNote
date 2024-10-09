@@ -15,7 +15,7 @@ import textStore from "@stores/textStore";
 const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
   const [animate, setAnimate] = useState(false);
   const [visible, setVisible] = useState(isOpen);
-  const { getFormattedData } = canvasStore();
+  const { drawings } = canvasStore();
   const { rectangles, circles } = shapeStore();
   const { textItems } = textStore();
 
@@ -34,10 +34,47 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
 
   if (!animate && !visible) return null;
 
+  const stringifyDetail = (structure) => {
+    // structure가 배열일 때, 각 요소에 대해 재귀 호출
+    if (Array.isArray(structure)) {
+      return structure.map((item) => stringifyDetail(item));
+    }
+
+    // structure가 객체일 때
+    if (typeof structure === "object" && structure !== null) {
+      const newObj = { ...structure };
+
+      // 'detail' 키가 존재하고, 그 값이 객체일 때 문자열로 변환
+      if (newObj.detail && typeof newObj.detail === "object") {
+        newObj.detail = JSON.stringify(newObj.detail);
+      }
+
+      // 다른 키에 대해서도 재귀 호출
+      Object.keys(newObj).forEach((key) => {
+        newObj[key] = stringifyDetail(newObj[key]);
+      });
+
+      return newObj;
+    }
+
+    // 기본값 반환 (배열이나 객체가 아닌 경우)
+    return structure;
+  };
+
   const handleFileStore = () => {
-    console.log("pdf 노트 저장");
+    // [TODO] pdf 노트 저장
+    const note_id = 999;
 
     // 메모 저장
+    const data = {
+      id: note_id,
+      text: stringifyDetail(textItems),
+      rectangle: stringifyDetail(rectangles),
+      circle: stringifyDetail(circles),
+      drawing: stringifyDetail(drawings()),
+    };
+
+    console.log(data);
   };
 
   return (

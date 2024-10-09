@@ -94,7 +94,7 @@ const canvasStore = create((set, get) => ({
   },
 
   // api 요청 보낼 구조로 변경
-  getFormattedData: () => {
+  drawings: () => {
     const paths = get().savedCanvasPaths;
     const records = get().savedCanvasRecords;
 
@@ -103,10 +103,10 @@ const canvasStore = create((set, get) => ({
     Object.keys(paths).forEach((page) => {
       result[page] = paths[page].map((path, index) => ({
         id: index,
-        detail: JSON.stringify({
+        detail: {
           paths: path,
           timeStamp: records[page] ? records[page][index] : null,
-        }),
+        },
       }));
     });
 
