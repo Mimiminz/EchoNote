@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import canvasStore from "@stores/canvasStore";
 import shapeStore from "@stores/shapeStore";
 import textStore from "@stores/textStore";
+import { saveMemo } from "@services/memoApi";
 
 const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
   const [animate, setAnimate] = useState(false);
@@ -34,15 +35,15 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
 
   if (!animate && !visible) return null;
 
-  const stringifyDetail = (structure) => {
-    // structure가 배열일 때, 각 요소에 대해 재귀 호출
-    if (Array.isArray(structure)) {
-      return structure.map((item) => stringifyDetail(item));
+  const stringifyDetail = (obj) => {
+    // 배열일 때, 각 요소에 대해 재귀 호출
+    if (Array.isArray(obj)) {
+      return obj.map((item) => stringifyDetail(item));
     }
 
-    // structure가 객체일 때
-    if (typeof structure === "object" && structure !== null) {
-      const newObj = { ...structure };
+    // 객체일 때
+    if (typeof obj === "object" && obj !== null) {
+      const newObj = { ...obj };
 
       // 'detail' 키가 존재하고, 그 값이 객체일 때 문자열로 변환
       if (newObj.detail && typeof newObj.detail === "object") {
@@ -58,7 +59,7 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
     }
 
     // 기본값 반환 (배열이나 객체가 아닌 경우)
-    return structure;
+    return obj;
   };
 
   const handleFileStore = () => {
@@ -74,7 +75,7 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
       drawing: stringifyDetail(drawings()),
     };
 
-    console.log(data);
+    saveMemo(data);
   };
 
   return (
