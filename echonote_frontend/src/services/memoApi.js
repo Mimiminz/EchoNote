@@ -14,3 +14,22 @@ export const saveMemo = async (data) => {
     throw error;
   }
 };
+
+export const getMemo = async (noteId) => {
+  try {
+    const response = await apiClient.get(`/memo`, {
+      params: {
+        id: noteId,
+      },
+    });
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.error("Failed to fetch memo");
+      throw new Error("Failed to fetch memo");
+    }
+  } catch (error) {
+    console.error("Error fetching memo:", error);
+    throw error;
+  }
+};

@@ -15,6 +15,18 @@ const shapeStore = create((set, get) => ({
 
   selectedShape: { id: null, type: null }, // detail 제거
 
+  loadRectangles: (item) => {
+    set((state) => ({
+      rectangles: item,
+    }));
+  },
+
+  loadCircles: (item) => {
+    set((state) => ({
+      circles: item,
+    }));
+  },
+
   // 선택된 도형 설정
   setSelectedShape: (id, type) => {
     set(() => ({

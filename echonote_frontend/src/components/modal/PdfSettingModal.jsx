@@ -64,7 +64,7 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
 
   const handleFileStore = () => {
     // [TODO] pdf 노트 저장
-    const note_id = 999;
+    const note_id = 998;
 
     // 메모 저장
     const data = {

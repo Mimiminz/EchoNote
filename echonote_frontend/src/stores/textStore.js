@@ -18,6 +18,12 @@ const textStore = create((set, get) => ({
     }));
   },
 
+  loadTextItems: (item) => {
+    set((state) => ({
+      textItems: item,
+    }));
+  },
+
   addTextItem: (item) => {
     const currentPage = get().currentPage;
     set((state) => ({
