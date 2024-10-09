@@ -47,8 +47,8 @@ const NotePage = () => {
   useEffect(() => {
     const fetchMemo = async () => {
       try {
-        const memoData = await getMemo(998);
-
+        const memoData = await getMemo(id);
+        // console.log(memoData);
         // 각 메모 요소로 전달
         loadTextItems(parseDetail(memoData.text));
         loadRectangles(parseDetail(memoData.rectangle));
@@ -97,6 +97,7 @@ const NotePage = () => {
     <>
       <ToolBar
         onToggleDrawingEditor={toggleDrawingEditor}
+        noteId={id}
         onToggleToolBar={handleToggleToolBar}
       />
       <Layout>

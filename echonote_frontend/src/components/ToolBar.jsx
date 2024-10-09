@@ -51,7 +51,7 @@ import canvasStore from "@stores/canvasStore";
 import shapeStore from "@stores/shapeStore";
 import { updateMemo } from "@services/memoApi";
 
-const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar }) => {
+const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
   const {
     isPdfBarOpened,
     isSTTBarOpened,
@@ -193,18 +193,15 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar }) => {
   };
 
   const handleFileStore = () => {
-    // [TODO] pdf 노트 저장
-    const note_id = 998;
-
     // 메모 저장
     const data = {
-      id: note_id,
+      id: noteId,
       text: stringifyDetail(textItems),
       rectangle: stringifyDetail(rectangles),
       circle: stringifyDetail(circles),
       drawing: stringifyDetail(drawings()),
     };
-
+    // console.log(data);
     updateMemo(data);
     navigate("/");
   };
