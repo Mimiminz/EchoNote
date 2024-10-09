@@ -42,10 +42,14 @@ import {
   FontSizeButton,
   ToolBarIconContainer,
   ListButton,
+  SaveButton,
 } from "@components/styles/ToolBar.style";
 import { VscSettings, VscArrowLeft } from "react-icons/vsc";
 import textStore from "@/stores/textStore";
 import Dropdown from "@components/common/Dropdown";
+import canvasStore from "@stores/canvasStore";
+import shapeStore from "@stores/shapeStore";
+import { updateMemo } from "@services/memoApi";
 
 const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar }) => {
   const {
@@ -88,6 +92,9 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar }) => {
 
   // 1부터 64까지의 숫자 배열(폰트사이즈)
   const fontSizeOptions = Array.from({ length: 64 }, (_, index) => index + 1);
+  const { drawings } = canvasStore();
+  const { rectangles, circles } = shapeStore();
+  const { textItems } = textStore();
 
   //도형모드 off -> 사각형 모드 -> 원 모드 -> 도형모드 off
   const handleShapeMode = () => {
@@ -158,6 +165,50 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar }) => {
     onToggleDrawingEditor();
   };
 
+  const stringifyDetail = (obj) => {
+    // 배열일 때, 각 요소에 대해 재귀 호출
+    if (Array.isArray(obj)) {
+      return obj.map((item) => stringifyDetail(item));
+    }
+
+    // 객체일 때
+    if (typeof obj === "object" && obj !== null) {
+      const newObj = { ...obj };
+
+      // 'detail' 키가 존재하고, 그 값이 객체일 때 문자열로 변환
+      if (newObj.detail && typeof newObj.detail === "object") {
+        newObj.detail = JSON.stringify(newObj.detail);
+      }
+
+      // 다른 키에 대해서도 재귀 호출
+      Object.keys(newObj).forEach((key) => {
+        newObj[key] = stringifyDetail(newObj[key]);
+      });
+
+      return newObj;
+    }
+
+    // 기본값 반환 (배열이나 객체가 아닌 경우)
+    return obj;
+  };
+
+  const handleFileStore = () => {
+    // [TODO] pdf 노트 저장
+    const note_id = 998;
+
+    // 메모 저장
+    const data = {
+      id: note_id,
+      text: stringifyDetail(textItems),
+      rectangle: stringifyDetail(rectangles),
+      circle: stringifyDetail(circles),
+      drawing: stringifyDetail(drawings()),
+    };
+
+    updateMemo(data);
+    navigate("/");
+  };
+
   return (
     <ToolBarContainer>
       <AnimatedToolBarContent collapsed={isCollapsed}>
@@ -169,6 +220,7 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar }) => {
             {note_name}
             <FaStar style={{ marginLeft: "10px", color: "gold" }} />
           </Title>
+          <SaveButton onClick={() => handleFileStore()}>Save</SaveButton>
           <SettingButton ref={settingButtonRef} onClick={togglePdfModal}>
             <VscSettings style={{ marginRight: "10px", fontSize: "20px" }} />
           </SettingButton>

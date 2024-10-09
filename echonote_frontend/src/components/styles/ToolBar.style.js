@@ -102,6 +102,14 @@ export const Title = styled.h1`
   margin: 0;
 `;
 
+export const SaveButton = styled.div`
+  position: absolute;
+  right: 60px;
+  align-items: center; /* Vertical centering */
+  justify-content: center;
+  cursor: pointer;
+`;
+
 export const SettingButton = styled.div`
   position: absolute;
   right: 10px; /* Ensure it aligns on the far right */

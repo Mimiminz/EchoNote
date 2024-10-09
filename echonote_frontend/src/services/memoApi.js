@@ -15,6 +15,21 @@ export const saveMemo = async (data) => {
   }
 };
 
+export const updateMemo = async (data) => {
+  try {
+    const response = await apiClient.put("/memo", data);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.error("Failed to save the memo");
+      throw new Error("Failed to save the memo");
+    }
+  } catch (error) {
+    console.error("Error saving the memo:", error);
+    throw error;
+  }
+};
+
 export const getMemo = async (noteId) => {
   try {
     const response = await apiClient.get(`/memo`, {
