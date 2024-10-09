@@ -7,6 +7,7 @@ import DrawingEditor from "@components/DrawingEditor";
 import { DrawingEditorContainer } from "@components/styles/DrawingEditor.style";
 import canvasStore from "@stores/canvasStore";
 import drawingTypeStore from "@/stores/drawingTypeStore";
+import { useNoteStore } from "@stores/noteStore";
 
 const PdfCanvas = ({ url, containerRef, isDrawingEditorOpened, onResize }) => {
   const canvasRef = useRef();
@@ -18,8 +19,9 @@ const PdfCanvas = ({ url, containerRef, isDrawingEditorOpened, onResize }) => {
   const [originalSize, setOriginalSize] = useState({ width: 0, height: 0 });
   const renderTaskRef = useRef(null);
   const { mode } = drawingTypeStore();
+  // const { note_id, pdf_path } = useNoteStore();
 
-  const sampleUrl =
+  const pdf_path =
     "https://timeisnullnull.s3.ap-northeast-2.amazonaws.com/le_Petit_Prince_%EB%B3%B8%EB%AC%B8.pdf";
 
   const renderPage = useCallback(
@@ -90,16 +92,18 @@ const PdfCanvas = ({ url, containerRef, isDrawingEditorOpened, onResize }) => {
 
   // PDF 문서를 로드
   useEffect(() => {
-    const loadingTask = pdfjsLib.getDocument(sampleUrl);
-    loadingTask.promise.then(
-      (loadedPdf) => {
-        setPdfRef(loadedPdf);
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-  }, [url]);
+    if (pdf_path) {
+      const loadingTask = pdfjsLib.getDocument(pdf_path);
+      loadingTask.promise.then(
+        (loadedPdf) => {
+          setPdfRef(loadedPdf);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    }
+  }, [pdf_path]);
 
   useEffect(() => {
     onResize(canvasSize.width, canvasSize.height);
