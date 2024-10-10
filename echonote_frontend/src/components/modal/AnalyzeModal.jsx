@@ -54,10 +54,14 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
   };
 
   const toggleTag = (tag) => {
+    console.log(tag);
     if (currentKeyword.includes(tag)) {
       setCurrentKeyword(currentKeyword.filter((keyword) => keyword !== tag));
+      console.log("containe" + currentKeyword);
     } else {
+      console.log("before", ...currentKeyword);
       setCurrentKeyword([...currentKeyword, tag]);
+      console.log("after" + currentKeyword);
     }
   };
 
