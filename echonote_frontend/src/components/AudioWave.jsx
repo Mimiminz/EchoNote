@@ -53,6 +53,8 @@ const AudioWave = () => {
   const { resetAllTimestamps: resetShapeAllTimestamps } = shapeStore();
   const { resetAllTimestamps: resetDrawingAllTimestamps } = canvasStore();
 
+  const pageMovementRef = useRef(page_movement);
+
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
@@ -126,7 +128,7 @@ const AudioWave = () => {
           await S3UploadRecord(data.presigned_url, wavFile);
 
           // 서버로 녹음된 파일 정보 저장
-          await saveRecordedFile(note_id, objectUrl, page_movement);
+          await saveRecordedFile(note_id, objectUrl, pageMovementRef);
         } catch (error) {
           console.error("Error during recording process:", error);
           setIsRecording(false);
@@ -137,6 +139,10 @@ const AudioWave = () => {
       return recPlugin;
     }
   }, [note_id, wavesurfer]);
+
+  useEffect(() => {
+    pageMovementRef.current = page_movement;
+  }, [page_movement]);
 
   useEffect(() => {
     if (wavesurfer && startTime !== null && record_path) {
