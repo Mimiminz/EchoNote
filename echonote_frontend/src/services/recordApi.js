@@ -17,11 +17,12 @@ export const getPresignedUrl = async () => {
 };
 
 // POST 요청: object_url을 통해 파일을 서버에 저장
-export const saveRecordedFile = async (noteId, objectUrl) => {
+export const saveRecordedFile = async (noteId, objectUrl, pageMovement) => {
   try {
     const payload = {
       note_id: noteId, // note_id는 0으로 설정하거나 필요에 따라 변경
       object_url: objectUrl,
+      page_movement: pageMovement,
     };
 
     const response = await apiClient.post("/voice", payload);
