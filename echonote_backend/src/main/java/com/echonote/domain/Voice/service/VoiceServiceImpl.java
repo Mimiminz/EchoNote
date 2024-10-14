@@ -277,6 +277,9 @@ public class VoiceServiceImpl implements VoiceService {
 
 			int pageIdx = 0;
 			for (STTRequest sttRequest : sttReqList) {
+				// 기본 페이지 설정
+				sttRequest.changePage(1);
+
 				// 페이지 이동이 남아있고, 페이지 전환 시점이 문장 시작 시간보다 이른 경우
 				while (pageIdx < pageMovement.size() &&
 					Float.parseFloat(sttRequest.getStart()) >= Float.parseFloat(
@@ -285,6 +288,8 @@ public class VoiceServiceImpl implements VoiceService {
 					pageIdx++;
 				}
 			}
+
+			System.out.println(sttReqList);
 
 			// map의 데이터 삭제
 			pageMovementStore.remove(stt.getId());
