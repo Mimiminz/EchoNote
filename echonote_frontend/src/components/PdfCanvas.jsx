@@ -89,7 +89,8 @@ const PdfCanvas = ({ containerRef, isDrawingEditorOpened, onResize }) => {
   );
 
   useEffect(() => {
-    addPageMovements({ timestamp: recordTime, page: currentPage });
+    if (recordTime !== null)
+      addPageMovements({ timestamp: recordTime, page: currentPage });
   }, [currentPage]);
 
   // currentPage, scale이 바뀔 때마다 페이지 렌더링
