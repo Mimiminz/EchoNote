@@ -296,13 +296,13 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
             <St.IconButton
               as={BiChevronsDown}
               onClick={toggleCollapse}
-              isActive={!isCollapsed}
+              isActive={isCollapsed}
             />
           ) : (
             <St.IconButton
               as={BiChevronsUp}
               onClick={toggleCollapse}
-              isActive={!isCollapsed}
+              isActive={isCollapsed}
             />
           )}
         </St.SideBarButton>
