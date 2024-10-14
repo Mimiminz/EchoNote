@@ -43,6 +43,8 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
     setKeywordColor,
     isAnalyzed,
     toggleAnalyzed,
+    analyzedColor,
+    setAnalyzedColor,
   } = useSearchStore();
   const { keywords } = useNoteStore();
 
@@ -134,7 +136,7 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
         <ModalHeader>텍스트 설정</ModalHeader>
         <BackgroundColorSection>
           <Github
-            color={keywordColor}
+            color={modalType === "음성" ? analyzedColor : keywordColor}
             colors={CORLER_HEX}
             placement={GithubPlacement.TopLeft}
             style={{
@@ -144,7 +146,9 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
               "--github-arrow-border-color": "rgba(0, 0, 0, 0)",
             }}
             onChange={(color) => {
-              setKeywordColor(color.hex);
+              modalType === "음성"
+                ? setAnalyzedColor(color.hex)
+                : setKeywordColor(color.hex);
             }}
           />
         </BackgroundColorSection>

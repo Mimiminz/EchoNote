@@ -62,6 +62,19 @@ export const Highlight = styled.span`
   background-color: yellow;
 `;
 
+export const AnalzedHighlight = styled.span.withConfig({
+  shouldForwardProp: shouldNotForwardPropsWithKeys(["keywordColor"]),
+})`
+  background-color: ${(props) => props.keywordColor || "#fff130"};
+`;
+
+export const KeywordHighlight = styled.span.withConfig({
+  shouldForwardProp: shouldNotForwardPropsWithKeys(["keywordColor"]),
+})`
+  color: ${(props) => props.keywordColor || "#ff0000"};
+  font-weight: bold;
+`;
+
 export const TextUnder = styled.span.withConfig({
   shouldForwardProp: shouldNotForwardPropsWithKeys(["keywordColor"]),
 })`

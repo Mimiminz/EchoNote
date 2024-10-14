@@ -41,7 +41,7 @@ const NoteSearchBar = ({ onSearch }) => {
 };
 
 NoteSearchBar.propTypes = {
-  NoteSearchBar: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default NoteSearchBar;

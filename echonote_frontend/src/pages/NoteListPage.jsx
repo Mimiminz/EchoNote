@@ -10,6 +10,7 @@ import {
   SortButtonContainer,
   SortButton,
   NoteHeader,
+  SwitchWrapper,
 } from "@pages/styles/NoteListPage.style";
 import { getNoteList } from "@services/noteApi";
 import { LuPenLine } from "react-icons/lu";
@@ -74,6 +75,11 @@ const NoteListPage = () => {
       <h1>Echo Note</h1>
       <NoteHeader>
         <SortButtonContainer>
+          <SwitchWrapper
+            activeIndex={
+              sortOption === "asc" ? 2 : sortOption === "desc" ? 1 : 0
+            }
+          />
           <SortButton
             active={sortOption === "asc"}
             onClick={() => handleSortChange("asc")}
