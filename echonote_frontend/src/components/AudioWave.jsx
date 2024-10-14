@@ -40,8 +40,15 @@ const AudioWave = () => {
   const playbackRates = [1, 1.25, 1.5, 1.75, 2];
   const { startTime, setStartTime, setRecordTime, recordTime } =
     useAudioStore();
-  const { note_id, record_path, setRecordPath, stt_status, setSTTStatus } =
-    useNoteStore();
+  const {
+    note_id,
+    record_path,
+    setRecordPath,
+    stt_status,
+    setSTTStatus,
+    resetPageMovements,
+    page_movement,
+  } = useNoteStore();
   const { resetAllTimestamps: resetTextAllTimestamps } = textStore();
   const { resetAllTimestamps: resetShapeAllTimestamps } = shapeStore();
   const { resetAllTimestamps: resetDrawingAllTimestamps } = canvasStore();
@@ -57,6 +64,7 @@ const AudioWave = () => {
     resetTextAllTimestamps();
     resetShapeAllTimestamps();
     resetDrawingAllTimestamps();
+    resetPageMovements(); //페이지 이동 기록 초기화
   };
 
   const { wavesurfer, currentTime } = useWavesurfer({
@@ -118,7 +126,7 @@ const AudioWave = () => {
           await S3UploadRecord(data.presigned_url, wavFile);
 
           // 서버로 녹음된 파일 정보 저장
-          await saveRecordedFile(note_id, objectUrl);
+          await saveRecordedFile(note_id, objectUrl, page_movement);
         } catch (error) {
           console.error("Error during recording process:", error);
           setIsRecording(false);
