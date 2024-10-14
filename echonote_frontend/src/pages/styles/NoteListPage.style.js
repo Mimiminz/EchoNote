@@ -15,6 +15,13 @@ export const NoteListContainer = styled.div`
   }
 `;
 
+export const NoteHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+`;
+
 // 노트 그리드 스타일
 export const NoteGrid = styled.div`
   display: grid;
