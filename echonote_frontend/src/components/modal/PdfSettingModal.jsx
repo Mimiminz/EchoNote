@@ -124,7 +124,7 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
           <ModalItem>태그</ModalItem>
           <ModalItem onClick={handleExportPdf}>파일로 저장</ModalItem>
           <ModalItem onClick={() => handleDeletePdf(note_id)}>
-            메모 삭제
+            노트 삭제
           </ModalItem>
         </ModalList>
       </ModalContainer>

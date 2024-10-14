@@ -33,7 +33,9 @@ export const AnimatedToolBarContent = styled.div.withConfig({
   overflow: hidden;
   max-height: ${({ collapsed }) => (collapsed ? "0" : "300px")};
   opacity: ${({ collapsed }) => (collapsed ? "0" : "1")};
-  transition: max-height 0.5s ease, opacity 0.5s ease;
+  transition: max-height ${({ collapsed }) => (collapsed ? "0.6s" : "0.8s")}
+      ease,
+    opacity 0.3s ease;
 `;
 
 export const ToolBarContent = styled.div`
@@ -92,7 +94,7 @@ export const IconButton = styled.div.withConfig({
   font-size: 18px;
   margin: 0 5px;
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.iconHover : theme.colors.iconColor};
+    !isActive ? theme.colors.iconHover : theme.colors.iconColor};
 `;
 
 export const Title = styled.h1`
