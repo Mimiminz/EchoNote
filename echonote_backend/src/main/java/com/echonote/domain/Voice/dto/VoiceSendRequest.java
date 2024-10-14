@@ -14,7 +14,7 @@ public class VoiceSendRequest {
 	private List<PageMovement> pageMovement;
 
 	@Data
-	public class PageMovement {
+	public static class PageMovement {
 		private String timestamp;
 		private int page;
 	}
