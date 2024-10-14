@@ -8,6 +8,7 @@ export const useNoteStore = create((set) => ({
   stt_status: "processing",
   update_at: null,
   keywords: [],
+  page_movement: [], //페이지 이동 기록
 
   // 상태 업데이트 함수
   setNoteDetail: (note) =>
@@ -32,5 +33,15 @@ export const useNoteStore = create((set) => ({
       record_path: null,
       stt_status: "processing",
       keywords: [],
+    }),
+
+  addPageMovements: (timestamp) =>
+    set((state) => ({
+      page_movement: [...state.page_movement, timestamp],
+    })),
+
+  resetPageMovements: () =>
+    set({
+      page_movement: [],
     }),
 }));

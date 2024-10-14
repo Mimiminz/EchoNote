@@ -7,6 +7,7 @@ import DrawingEditor from "@components/DrawingEditor";
 import drawingTypeStore from "@/stores/drawingTypeStore";
 import { useNoteStore } from "@stores/noteStore";
 import LoadingIcon from "@components/common/LoadingIcon"; // 로딩 아이콘
+import { useAudioStore } from "@/stores/recordStore";
 
 const PdfCanvas = ({ containerRef, isDrawingEditorOpened, onResize }) => {
   const canvasRef = useRef();
@@ -19,7 +20,8 @@ const PdfCanvas = ({ containerRef, isDrawingEditorOpened, onResize }) => {
   const renderTaskRef = useRef(null);
   const [isRendering, setIsRendering] = useState(true); // 렌더링 상태 추가
   const { mode, resetType } = drawingTypeStore();
-  const { pdf_path } = useNoteStore();
+  const { pdf_path, addPageMovements } = useNoteStore();
+  const { recordTime } = useAudioStore();
 
   // const pdf_path =
   //   "https://timeisnullnull.s3.ap-northeast-2.amazonaws.com/le_Petit_Prince_%EB%B3%B8%EB%AC%B8.pdf";
@@ -85,6 +87,10 @@ const PdfCanvas = ({ containerRef, isDrawingEditorOpened, onResize }) => {
     },
     [pdfRef, scale, containerRef]
   );
+
+  useEffect(() => {
+    addPageMovements({ timestamp: recordTime, page: currentPage });
+  }, [currentPage]);
 
   // currentPage, scale이 바뀔 때마다 페이지 렌더링
   useEffect(() => {
