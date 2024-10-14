@@ -85,6 +85,10 @@ public class VoiceServiceImpl implements VoiceService {
 
 	@Override
 	public void sendVoice(Long userId, String processId, VoiceSendRequest voiceSendRequest) {
+		System.out.println("======================================");
+		System.out.println(voiceSendRequest.toString());
+		System.out.println(voiceSendRequest.getPageMovement().toString());
+		System.out.println("======================================");
 
 		Note note = noteRepository.findById(voiceSendRequest.getNoteId())
 			.orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND));
