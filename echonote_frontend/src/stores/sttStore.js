@@ -30,10 +30,38 @@ export const useSTTStore = create((set, get) => ({
   scrollToSTT: (index) => {
     const refs = get().resultRefs;
     if (refs[index]) {
-      refs[index].scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
+      const element = refs[index];
+      const container = document.querySelector(".stt-list"); // 스크롤이 발생하는 상위 컨테이너
+
+      if (container) {
+        // 현재 요소의 위치 정보 가져오기 (상위 컨테이너 내에서)
+        const elementRect = element.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+
+        // 요소의 상대적인 위치 계산
+        const elementY =
+          container.scrollTop + elementRect.top - containerRect.top;
+
+        // 스크롤 오프셋 조정 값 (더 많이 내리기 위해 추가)
+        const offsetY = container.clientHeight / 2;
+
+        // 중간보다 약간 더 아래로 위치시키기 위해 offsetAdjustment 추가
+        container.scrollTo({
+          top: elementY - offsetY,
+          behavior: "smooth",
+        });
+
+        // 하이라이트 효과
+        const originalColor = element.querySelector("a").style.color;
+        element.querySelector("a").style.color = "red";
+
+        // 일정 시간 후에 원래 색상으로 복구
+        setTimeout(() => {
+          element.querySelector("a").style.color = originalColor;
+        }, 1500);
+      } else {
+        console.error("스크롤 컨테이너를 찾을 수 없습니다.");
+      }
     }
   },
 }));

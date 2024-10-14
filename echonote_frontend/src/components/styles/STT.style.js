@@ -33,6 +33,8 @@ export const STTContainer = styled.div`
 export const STTResultList = styled.ul`
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  max-height: 800px;
 `;
 
 export const STTResultItem = styled.li`
