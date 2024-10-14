@@ -22,7 +22,7 @@ public class STTRequest {
 		this.anomaly = anomaly;
 	}
 
-	public void changePageNo(int page) {
+	public void changePage(int page) {
 		this.page = page;
 	}
 }

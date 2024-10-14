@@ -27,6 +27,7 @@ import com.echonote.domain.Memo.entity.Memo;
 import com.echonote.domain.Voice.dao.VoiceRepository;
 import com.echonote.domain.Voice.dto.AnalysisResultRequest;
 import com.echonote.domain.Voice.dto.FlaskSendRequest;
+import com.echonote.domain.Voice.dto.PageMovement;
 import com.echonote.domain.Voice.dto.STTRequest;
 import com.echonote.domain.Voice.dto.STTResponse;
 import com.echonote.domain.Voice.dto.STTResultRequest;
@@ -64,7 +65,7 @@ public class VoiceServiceImpl implements VoiceService {
 	String STTflaskUrl = "https://uniformly-right-mako.ngrok-free.app/voice_stt/stt";
 
 	private final Map<String, TwoFlaskResult> resultStore = new ConcurrentHashMap<>();
-	private final Map<Long, List<VoiceSendRequest.PageMovement>> pageMovementStore = new ConcurrentHashMap<>();
+	private final Map<Long, List<PageMovement>> pageMovementStore = new ConcurrentHashMap<>();
 
 	@Override
 	public UrlResponse generatePreSignUrl(String filePath,
@@ -272,11 +273,11 @@ public class VoiceServiceImpl implements VoiceService {
 			// stt와 페이지 이동 로그 합치기
 
 			List<STTRequest> sttList = stt.getResult();
-			List<VoiceSendRequest.PageMovement> pageMovement = pageMovementStore.get(stt.getId());
+			List<PageMovement> pageMovement = pageMovementStore.get(stt.getId());
 
 			for (int sttIdx = 0, pageIdx = 0; sttIdx < sttList.size() && pageIdx < pageMovement.size(); ) {
 				STTRequest curStt = sttList.get(sttIdx);
-				VoiceSendRequest.PageMovement curPageMove = pageMovement.get(pageIdx);
+				PageMovement curPageMove = pageMovement.get(pageIdx);
 
 				if (Float.parseFloat(curStt.getEnd()) <
 					Float.parseFloat(curPageMove.getTimestamp())) {
@@ -285,7 +286,7 @@ public class VoiceServiceImpl implements VoiceService {
 				} else {
 
 					// 페이지 정보 추가
-					sttList.get(sttIdx).changePageNo(curPageMove.getPage());
+					sttList.get(sttIdx).changePage(curPageMove.getPage());
 					System.out.println("page number changed");
 
 					sttIdx++;
