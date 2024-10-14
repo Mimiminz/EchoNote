@@ -25,6 +25,8 @@ export const saveRecordedFile = async (noteId, objectUrl, pageMovement) => {
       page_movement: pageMovement,
     };
 
+    console.log(pageMovement);
+
     const response = await apiClient.post("/voice", payload);
     if (response.status === 200) {
       return response.data;
