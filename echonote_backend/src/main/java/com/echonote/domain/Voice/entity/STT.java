@@ -1,12 +1,16 @@
 package com.echonote.domain.Voice.entity;
 
-import com.echonote.domain.Voice.dto.STTRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import java.util.List;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import com.echonote.domain.Voice.dto.STTRequest;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @NoArgsConstructor
@@ -15,7 +19,7 @@ import java.util.List;
 @ToString
 @Document(collection = "STT")
 public class STT {
-    private String processId;
-    private long id;
-    private List<STTRequest> result;
+	private String processId;
+	private long id;
+	private List<STTRequest> result;
 }

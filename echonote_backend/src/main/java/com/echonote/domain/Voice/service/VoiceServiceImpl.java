@@ -60,10 +60,11 @@ public class VoiceServiceImpl implements VoiceService {
 	@Value("${voice_analysis_server}")
 	String analysisServerUrl;  // 음성 분석 모델 API URL
 
-//	@Value("${STT_flask_Url}")
-	String STTflaskUrl= "https://uniformly-right-mako.ngrok-free.app/voice_stt/stt";
+	//	@Value("${STT_flask_Url}")
+	String STTflaskUrl = "https://uniformly-right-mako.ngrok-free.app/voice_stt/stt";
 
 	private final Map<String, TwoFlaskResult> resultStore = new ConcurrentHashMap<>();
+	private final Map<Long, List<VoiceSendRequest.PageMovement>> pageMovementStore = new ConcurrentHashMap<>();
 
 	@Override
 	public UrlResponse generatePreSignUrl(String filePath,
@@ -87,6 +88,10 @@ public class VoiceServiceImpl implements VoiceService {
 
 		Note note = noteRepository.findById(voiceSendRequest.getNoteId())
 			.orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND));
+
+		// 페이지 이동 정보 map에 저장
+		Long noteId = voiceSendRequest.getNoteId();
+		pageMovementStore.put(noteId, voiceSendRequest.getPageMovements());
 
 		// 2. Flask 모델 요청
 		FlaskSendRequest flaskSendRequest = FlaskSendRequest.builder()
@@ -113,15 +118,15 @@ public class VoiceServiceImpl implements VoiceService {
 
 	private STTResponse sendSTTFlask(FlaskSendRequest flaskSendRequest) {
 
-//		String flaskUrl = "https://timeisnullnull.duckdns.org:8090/voice_stt/stt";  // STT 모델 API URL
-//		String flaskUrl = "http://70.12.130.111:4999/voice_stt/stt";
+		//		String flaskUrl = "https://timeisnullnull.duckdns.org:8090/voice_stt/stt";  // STT 모델 API URL
+		//		String flaskUrl = "http://70.12.130.111:4999/voice_stt/stt";
 
 		// HTTP 헤더 설정
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);  // JSON으로 전송
 
 		log.info("flaskUrl: " + STTflaskUrl);
-		log.info("flask로 보내는 정보: "+ flaskSendRequest.toString());
+		log.info("flask로 보내는 정보: " + flaskSendRequest.toString());
 
 		// 요청에 데이터 추가
 		HttpEntity<FlaskSendRequest> entity = new HttpEntity<>(flaskSendRequest, headers);
@@ -225,22 +230,20 @@ public class VoiceServiceImpl implements VoiceService {
 					sttIdx++;
 				}
 
-				if(sttIdx >= sttRequest.size() || aIdx >= anomalyTimes.size())
+				if (sttIdx >= sttRequest.size() || aIdx >= anomalyTimes.size())
 					break;
-
 
 				// 현재 문장이 이상 지점보다 이전에 있다면 다음 문장을 탐색
-				if(  Float.parseFloat(sttRequest.get(sttIdx).getEnd()) <
-					Float.parseFloat(anomalyTimes.get(aIdx)) )
+				if (Float.parseFloat(sttRequest.get(sttIdx).getEnd()) <
+					Float.parseFloat(anomalyTimes.get(aIdx)))
 					sttIdx++;
 
-				if(sttIdx >= sttRequest.size())
+				if (sttIdx >= sttRequest.size())
 					break;
 
-				
 				// 이상 지점이 현재 문장보다 이전에 있다면 다음 이상 지점을 탐색
-				if( Float.parseFloat(anomalyTimes.get(aIdx)) <
-					Float.parseFloat(sttRequest.get(sttIdx).getStart())  )
+				if (Float.parseFloat(anomalyTimes.get(aIdx)) <
+					Float.parseFloat(sttRequest.get(sttIdx).getStart()))
 					aIdx++;
 			}
 
@@ -262,6 +265,48 @@ public class VoiceServiceImpl implements VoiceService {
 	@Override
 	public void insertSTT(STT stt) {
 		try {
+			// stt와 페이지 이동 로그 합치기
+
+			List<STTRequest> sttList = stt.getResult();
+			List<VoiceSendRequest.PageMovement> pageMovement = pageMovementStore.get(stt.getId());
+
+			for (int sttIdx = 0, pageIdx = 0; sttIdx < sttList.size() && pageIdx < pageMovement.size(); ) {
+				STTRequest curStt = sttList.get(sttIdx);
+				VoiceSendRequest.PageMovement curPageMove = pageMovement.get(pageIdx);
+
+				if (Float.parseFloat(curStt.getEnd()) <
+					Float.parseFloat(curPageMove.getTimestamp())) {
+
+					pageIdx++;
+				} else {
+
+					// 페이지 정보 추가
+					sttList.get(sttIdx).changePageNo(curPageMove.getPageNo());
+					System.out.println("page number changed");
+
+					sttIdx++;
+
+				}
+
+				// if (Float.parseFloat(curStt.getStart()) >=
+				// 	Float.parseFloat(curPageMove.getTimestamp())) {
+				//
+				// 	// 페이지 정보 추가
+				// 	sttList.get(sttIdx).changePageNo(curPageMove.getPageNo());
+				// 	System.out.println("page number changed");
+				//
+				// 	sttIdx++;
+				//
+				// } else if (Float.parseFloat(curStt.getEnd()) <
+				// 	Float.parseFloat(curPageMove.getTimestamp())) {
+				//
+				// 	pageIdx++;
+				// }
+			}
+
+			// map의 데이터 삭제
+			pageMovementStore.remove(stt.getId());
+
 			STT insert = voiceRepository.save(stt);
 			log.info("Inserted STT with ID: " + insert.getId());
 		} catch (DuplicateKeyException e) {
