@@ -95,9 +95,10 @@ export const NewNoteButton = styled(Link)`
 export const SortButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
-  background-color: #d3d3d3;
+  background-color: #e2e2e2;
   padding: 3px;
   border-radius: 8px;
+  box-shadow: inset 0px 0px 10px #c5c5c5c7;
 `;
 
 export const SortButton = styled.button.withConfig({
@@ -107,10 +108,11 @@ export const SortButton = styled.button.withConfig({
   border: none;
   color: 333;
   font-size: 14px;
-  padding: 8px 16px;
+  padding: 6px 13px;
   border-radius: 8px;
-  margin-right: 10px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   -webkit-tap-highlight-color: transparent;
+  box-shadow: ${({ active }) =>
+    active ? "0px 0px 5px #9e9e9e" : "transparent"};
 `;
