@@ -14,6 +14,7 @@ import { useSearchStore } from "@stores/sideBarStore";
 import { useNoteStore } from "@stores/noteStore";
 import LoadingIcon from "@components/common/LoadingIcon";
 import Swal from "sweetalert2";
+import pageStore from "@/stores/pageStore";
 
 // 시간 포맷팅 함수 (초를 분:초로 변환)
 const formatTime = (seconds) => {
@@ -28,6 +29,7 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
   const { setStartTime } = useAudioStore();
   const { note_id, record_path, stt_status, setSTTStatus } = useNoteStore();
   const [isLoading, setIsLoading] = useState(false);
+  const { setCurrentPage } = pageStore();
 
   const Toast = Swal.mixin({
     toast: true,
@@ -187,6 +189,11 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
     }
   };
 
+  const handleMappingRecord = (start, page) => {
+    setStartTime(Number(start).toFixed(6));
+    setCurrentPage(page);
+  };
+
   useEffect(() => {
     if (onSubmit) {
       onSubmit(modifiedTexts);
@@ -242,7 +249,7 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
                 >
                   <ResultLink
                     onClick={() =>
-                      setStartTime(Number(segment.start).toFixed(6))
+                      handleMappingRecord(segment.start, segment.page)
                     }
                   >
                     {formatTime(parseFloat(segment.start))} ~{" "}
