@@ -128,7 +128,7 @@ const AudioWave = () => {
           await S3UploadRecord(data.presigned_url, wavFile);
 
           // 서버로 녹음된 파일 정보 저장
-          await saveRecordedFile(note_id, objectUrl, pageMovementRef);
+          await saveRecordedFile(note_id, objectUrl, pageMovementRef.current);
         } catch (error) {
           console.error("Error during recording process:", error);
           setIsRecording(false);
