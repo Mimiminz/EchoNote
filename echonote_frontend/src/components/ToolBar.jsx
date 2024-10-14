@@ -294,13 +294,13 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
           />
           {isCollapsed ? (
             <St.IconButton
-              as={BiChevronsUp}
+              as={BiChevronsDown}
               onClick={toggleCollapse}
               isActive={!isCollapsed}
             />
           ) : (
             <St.IconButton
-              as={BiChevronsDown}
+              as={BiChevronsUp}
               onClick={toggleCollapse}
               isActive={!isCollapsed}
             />
