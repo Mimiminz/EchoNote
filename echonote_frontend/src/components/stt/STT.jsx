@@ -16,6 +16,7 @@ import { useNoteStore } from "@stores/noteStore";
 import LoadingIcon from "@components/common/LoadingIcon";
 import Swal from "sweetalert2";
 import pageStore from "@/stores/pageStore";
+import { useSTTStore } from "@stores/sttStore";
 
 // 시간 포맷팅 함수 (초를 분:초로 변환)
 const formatTime = (seconds) => {
@@ -25,12 +26,13 @@ const formatTime = (seconds) => {
 };
 
 const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
-  const [sttData, setSttData] = useState([]);
+  // const [sttData, setSttData] = useState([]);
   const [modifiedTexts, setModifiedTexts] = useState([]);
   const { setStartTime } = useAudioStore();
   const { note_id, record_path, stt_status, setSTTStatus } = useNoteStore();
   const [isLoading, setIsLoading] = useState(false);
   const { setCurrentPage } = pageStore();
+  const { sttData, setSttData, setResultRefs } = useSTTStore();
 
   const Toast = Swal.mixin({
     toast: true,
@@ -56,6 +58,12 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
   } = useSearchStore();
   const resultRefs = useRef([]);
   const resultListRef = useRef(null);
+
+  useEffect(() => {
+    if (resultRefs.current.length > 0) {
+      setResultRefs(resultRefs.current);
+    }
+  }, [sttData]);
 
   const fetchData = async () => {
     const data = await getSTTResult(note_id);
