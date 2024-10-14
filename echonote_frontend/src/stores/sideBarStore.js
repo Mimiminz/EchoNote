@@ -37,6 +37,9 @@ const useSearchStore = create((set) => ({
   keywordColor: "#B80000",
   setKeywordColor: (color) => set({ keywordColor: color }),
 
+  analyzedColor: "#fff495",
+  setAnalyzedColor: (color) => set({ analyzedColor: color }),
+
   currentKeyword: [],
   setCurrentKeyword: (keywords) => set({ currentKeyword: keywords }),
 }));
