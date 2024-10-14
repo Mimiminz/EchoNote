@@ -34,22 +34,23 @@ const CORLER_HEX = [
 
 const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
   const [isVisible, setIsVisible] = useState(isOpen);
-  const [isOn, setisOn] = useState(false);
   const {
     currentKeyword,
     setCurrentKeyword,
+    isKeyword,
     toggleKeyword,
     keywordColor,
     setKeywordColor,
+    isAnalyzed,
+    toggleAnalyzed,
   } = useSearchStore();
   const { keywords } = useNoteStore();
 
   const toggleHandler = () => {
-    setisOn(!isOn);
+    toggleAnalyzed();
   };
 
   const toggleKeywordHandler = () => {
-    setisOn(!isOn);
     toggleKeyword();
   };
 
@@ -90,11 +91,13 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
             <ToggleContainer onClick={toggleHandler}>
               <div
                 className={`toggle-container ${
-                  isOn ? "toggle--checked" : null
+                  isAnalyzed ? "toggle--checked" : null
                 }`}
               />
               <div
-                className={`toggle-circle ${isOn ? "toggle--checked" : null}`}
+                className={`toggle-circle ${
+                  isAnalyzed ? "toggle--checked" : null
+                }`}
               />
             </ToggleContainer>
           </ModalHeader>
@@ -105,11 +108,13 @@ const AnalyzeModal = ({ isOpen, onClose, position, modalType }) => {
               <ToggleContainer onClick={toggleKeywordHandler}>
                 <div
                   className={`toggle-container ${
-                    isOn ? "toggle--checked" : null
+                    isKeyword ? "toggle--checked" : null
                   }`}
                 />
                 <div
-                  className={`toggle-circle ${isOn ? "toggle--checked" : null}`}
+                  className={`toggle-circle ${
+                    isKeyword ? "toggle--checked" : null
+                  }`}
                 />
               </ToggleContainer>
             </ModalHeader>

@@ -28,8 +28,11 @@ const useSearchStore = create((set) => ({
   searchResults: [],
   setSearchResults: (results) => set({ searchResults: results }),
 
-  isKeyword: false,
+  isKeyword: true,
   toggleKeyword: () => set((state) => ({ isKeyword: !state.isKeyword })),
+
+  isAnalyzed: true,
+  toggleAnalyzed: () => set((state) => ({ isAnalyzed: !state.isAnalyzed })),
 
   keywordColor: "#B80000",
   setKeywordColor: (color) => set({ keywordColor: color }),
