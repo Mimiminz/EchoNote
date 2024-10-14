@@ -16,13 +16,13 @@ public class STTRequest {
 	private boolean anomaly = false;
 
 	@Builder.Default
-	private int pageNo = 1;
+	private int page = 1;
 
 	public void changeAnomaly(boolean anomaly) {
 		this.anomaly = anomaly;
 	}
 
-	public void changePageNo(int pageNo) {
-		this.pageNo = pageNo;
+	public void changePageNo(int page) {
+		this.page = page;
 	}
 }
