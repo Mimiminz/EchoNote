@@ -94,7 +94,7 @@ export const IconButton = styled.div.withConfig({
   font-size: 18px;
   margin: 0 5px;
   color: ${({ isActive, theme }) =>
-    !isActive ? theme.colors.iconHover : theme.colors.iconColor};
+    isActive ? theme.colors.iconHover : theme.colors.iconColor};
 `;
 
 export const Title = styled.h1`
