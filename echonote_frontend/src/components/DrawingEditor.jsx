@@ -8,7 +8,7 @@ import drawingTypeStore from "@/stores/drawingTypeStore";
 const DrawingEditor = ({ scale, page, readOnly }) => {
   const canvasRef = useRef();
   const [eraseMode, setEraseMode] = useState(false);
-  const [strokeWidth, setStrokeWidth] = useState(5);
+  // const [strokeWidth, setStrokeWidth] = useState(5);
   const [eraserWidth, setEraserWidth] = useState(10);
   const [strokeColor, setStrokeColor] = useState("#000000");
   const [noEdit, setNoEdit] = useState(false);
@@ -24,6 +24,8 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
     getCanvasPath,
     activeTool,
     setActiveTool,
+    strokeWidth,
+    setStrokeWidth,
   } = canvasStore();
 
   const toggleLassoMode = () => {
@@ -130,7 +132,6 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
       {mode.pen && (
         <DrawingToolBar
           eraseMode={eraseMode}
-          strokeWidth={strokeWidth}
           eraserWidth={eraserWidth}
           strokeColor={strokeColor}
           onPenClick={handlePenClick}
@@ -151,7 +152,6 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
         ref={canvasRef}
         strokeWidth={strokeWidth * scale}
         eraserWidth={eraserWidth * scale}
-        strokeColor={strokeColor}
         eraseMode={eraseMode}
         readOnly={readOnly || noEdit}
         scale={scale}

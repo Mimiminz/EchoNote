@@ -13,23 +13,14 @@ import { useSTTStore } from "@stores/sttStore";
 
 const DrawingCanvas = forwardRef(
   (
-    {
-      strokeWidth,
-      eraserWidth,
-      strokeColor,
-      eraseMode,
-      readOnly,
-      scale,
-      page,
-      lassoMode,
-    },
+    { eraserWidth, strokeColor, eraseMode, readOnly, scale, page, lassoMode },
     ref
   ) => {
     const containerRef = useRef();
     const overlayCanvasRef = useRef();
     const [selectionPath, setSelectionPath] = useState([]);
-    const { getCanvasPath, setCanvasPath, getMinRecordingTime } =
-      canvasStore.getState();
+    const { getCanvasPath, setCanvasPath, getMinRecordingTime, strokeWidth } =
+      canvasStore();
     const { recordTime, setStartTime } = useAudioStore();
     const [drawingTime, setDrawingTime] = useState(0);
     const { findSTTIndex, scrollToSTT } = useSTTStore();

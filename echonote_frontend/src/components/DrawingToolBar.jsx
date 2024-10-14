@@ -15,7 +15,6 @@ import canvasStore from "@stores/canvasStore";
 
 const DrawingToolBar = ({
   eraseMode,
-  strokeWidth,
   eraserWidth,
   strokeColor,
   onPenClick,
@@ -33,7 +32,7 @@ const DrawingToolBar = ({
   // const [activeTool, setActiveTool] = useState("pen");
   const [showSlider, setShowSlider] = useState(false);
   const strokeWidthRef = useRef(null);
-  const { activeTool, setActiveTool } = canvasStore();
+  const { activeTool, setActiveTool, strokeWidth } = canvasStore();
   const buttonRefs = {
     pen: useRef(null),
     eraser: useRef(null),
