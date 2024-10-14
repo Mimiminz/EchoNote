@@ -15,6 +15,13 @@ export const NoteListContainer = styled.div`
   }
 `;
 
+export const NoteHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
 // 노트 그리드 스타일
 export const NoteGrid = styled.div`
   display: grid;
@@ -86,10 +93,8 @@ export const NewNoteButton = styled(Link)`
 `;
 
 export const SortButtonContainer = styled.div`
-  margin-left: auto;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 20px;
   background-color: #d3d3d3;
   padding: 3px;
   border-radius: 8px;

@@ -9,13 +9,16 @@ import {
   NewNoteButton,
   SortButtonContainer,
   SortButton,
+  NoteHeader,
 } from "@pages/styles/NoteListPage.style";
 import { getNoteList } from "@services/noteApi";
 import { LuPenLine } from "react-icons/lu";
 import NewNoteModal from "@components/modal/NewNoteModal";
+import NoteSearchBar from "@/components/common/NoteSearchBar";
 
 const NoteListPage = () => {
   const [notes, setNotes] = useState([]);
+  const [searchResultNotes, setSearchResultNotes] = useState([]); //검색 결과 저장
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState("asc");
 
@@ -58,31 +61,45 @@ const NoteListPage = () => {
     setNotes(sortedNotes);
   };
 
+  const handleSearch = (keyword) => {
+    // keyword를 포함하는 note들을 필터링하여 searchResultNotes에 저장
+    const filteredNotes = notes.filter((note) =>
+      note.title.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setSearchResultNotes(filteredNotes);
+  };
+
   return (
     <NoteListContainer>
       <h1>Echo Note</h1>
-      <SortButtonContainer>
-        <SortButton
-          active={sortOption === "asc"}
-          onClick={() => handleSortChange("asc")}
-        >
-          최신순
-        </SortButton>
-        <SortButton
-          active={sortOption === "desc"}
-          onClick={() => handleSortChange("desc")}
-        >
-          오래된순
-        </SortButton>
-        <SortButton
-          active={sortOption === "update"}
-          onClick={() => handleSortChange("update")}
-        >
-          수정순
-        </SortButton>
-      </SortButtonContainer>
+      <NoteHeader>
+        <SortButtonContainer>
+          <SortButton
+            active={sortOption === "asc"}
+            onClick={() => handleSortChange("asc")}
+          >
+            최신순
+          </SortButton>
+          <SortButton
+            active={sortOption === "desc"}
+            onClick={() => handleSortChange("desc")}
+          >
+            오래된순
+          </SortButton>
+          <SortButton
+            active={sortOption === "update"}
+            onClick={() => handleSortChange("update")}
+          >
+            수정순
+          </SortButton>
+        </SortButtonContainer>
+        <NoteSearchBar onSearch={handleSearch} />
+      </NoteHeader>
       <NoteGrid>
-        {notes.map((note) => (
+        {(searchResultNotes && searchResultNotes.length > 0
+          ? searchResultNotes
+          : notes
+        ).map((note) => (
           <NoteItem key={note.id}>
             <Link to={`/note/${note.id}`}>
               <NoteImage src={note.image} alt={`${note.title} 이미지`} />
@@ -91,6 +108,7 @@ const NoteListPage = () => {
           </NoteItem>
         ))}
       </NoteGrid>
+
       <NewNoteButton to="#" onClick={openModal}>
         <LuPenLine />
       </NewNoteButton>
