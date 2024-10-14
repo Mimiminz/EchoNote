@@ -9,6 +9,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
 import * as St from "@components/styles/DrawingEditor.style";
 import canvasStore from "@stores/canvasStore";
 import { useAudioStore } from "@stores/recordStore";
+import { useSTTStore } from "@stores/sttStore";
 
 const DrawingCanvas = forwardRef(
   (
@@ -31,6 +32,7 @@ const DrawingCanvas = forwardRef(
       canvasStore.getState();
     const { recordTime, setStartTime } = useAudioStore();
     const [drawingTime, setDrawingTime] = useState(0);
+    const { findSTTIndex, scrollToSTT } = useSTTStore();
 
     const loadCanvasPath = () => {
       const savedPaths = getCanvasPath(page);
@@ -211,6 +213,12 @@ const DrawingCanvas = forwardRef(
           // 녹음과 매핑된 경우에만 이동
           if (minTime !== 0) {
             setStartTime(minTime);
+
+            // 해당 minTime이 포함된 STT 인덱스 찾기
+            const sttIndex = findSTTIndex(minTime);
+            if (sttIndex !== null) {
+              scrollToSTT(sttIndex);
+            }
           }
         }
       }
