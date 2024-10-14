@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { shouldNotForwardPropsWithKeys } from "@shared/utils/shouldForwardProp";
 
 // 전체 노트 리스트 페이지 컨테이너
 export const NoteListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: ${(props) => props.theme.colors.backgroundColor};
   height: 100vh;
@@ -80,4 +83,29 @@ export const NewNoteButton = styled(Link)`
   i {
     font-size: 24px;
   }
+`;
+
+export const SortButtonContainer = styled.div`
+  margin-left: auto;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #d3d3d3;
+  padding: 3px;
+  border-radius: 8px;
+`;
+
+export const SortButton = styled.button.withConfig({
+  shouldForwardProp: shouldNotForwardPropsWithKeys(["active"]),
+})`
+  background-color: ${({ active }) => (active ? "#f5f5f5" : "transparent")};
+  border: none;
+  color: 333;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-tap-highlight-color: transparent;
 `;

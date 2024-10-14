@@ -7,6 +7,8 @@ import {
   NoteImage,
   NoteTitle,
   NewNoteButton,
+  SortButtonContainer,
+  SortButton,
 } from "@pages/styles/NoteListPage.style";
 import { getNoteList } from "@services/noteApi";
 import { LuPenLine } from "react-icons/lu";
@@ -15,6 +17,7 @@ import NewNoteModal from "@components/modal/NewNoteModal";
 const NoteListPage = () => {
   const [notes, setNotes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("asc");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -39,11 +42,45 @@ const NoteListPage = () => {
       }
     };
     fetchData();
-  }, []); // id 대신 빈 배열로 effect가 처음 한 번만 실행되도록 설정
+  }, []);
+
+  const handleSortChange = (option) => {
+    setSortOption(option);
+    const sortedNotes = [...notes].sort((a, b) => {
+      if (option === "asc") {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      } else if (option === "desc") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else if (option === "update") {
+        return new Date(a.update_at) - new Date(b.update_at);
+      }
+    });
+    setNotes(sortedNotes);
+  };
 
   return (
     <NoteListContainer>
       <h1>Echo Note</h1>
+      <SortButtonContainer>
+        <SortButton
+          active={sortOption === "asc"}
+          onClick={() => handleSortChange("asc")}
+        >
+          최신순
+        </SortButton>
+        <SortButton
+          active={sortOption === "desc"}
+          onClick={() => handleSortChange("desc")}
+        >
+          오래된순
+        </SortButton>
+        <SortButton
+          active={sortOption === "update"}
+          onClick={() => handleSortChange("update")}
+        >
+          수정순
+        </SortButton>
+      </SortButtonContainer>
       <NoteGrid>
         {notes.map((note) => (
           <NoteItem key={note.id}>
