@@ -84,6 +84,8 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
     resetAllDrawings();
     resetType();
     resetStrockColor();
+    resetSidebarStore();
+    resetNoteStore();
   };
 
   //도형모드 off -> 사각형 모드 -> 원 모드 -> 도형모드 off
@@ -118,8 +120,6 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
 
   const moveNoteList = () => {
     navigate(-1);
-    resetSidebarStore();
-    resetNoteStore();
     resetItems();
   };
 
