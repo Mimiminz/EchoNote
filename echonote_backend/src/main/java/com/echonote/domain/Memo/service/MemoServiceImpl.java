@@ -3,6 +3,10 @@ package com.echonote.domain.Memo.service;
 import com.echonote.domain.Memo.dao.MemoRepository;
 import com.echonote.domain.Memo.dto.MemoRequest;
 import com.echonote.domain.Memo.entity.Memo;
+import com.echonote.domain.note.dao.NoteRepository;
+import com.echonote.domain.note.entity.Note;
+import com.echonote.global.aop.exception.BusinessLogicException;
+import com.echonote.global.aop.exception.ErrorCode;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,7 @@ import java.util.Optional;
 public class MemoServiceImpl implements MemoService {
 
     private final MemoRepository memoRepository;
+    private final NoteRepository noteRepository;
 
     private final MongoTemplate mongoTemplate;
 
@@ -42,6 +48,12 @@ public class MemoServiceImpl implements MemoService {
     // 메모 업데이트
     @Override
     public Memo updateMemo(Memo list) {
+
+            Note note = noteRepository.findById(list.getId())
+                    .orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND));
+            note.setUpdate_at(LocalDateTime.now());
+            noteRepository.save(note);
+
             Memo result = memoRepository.save(list);
             return result;
 
