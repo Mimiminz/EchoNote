@@ -71,30 +71,30 @@ const NoteListPage = () => {
 
   return (
     <NoteListContainer>
+      <h1>Echo Note</h1>
       <NoteHeader>
-        <h1>Echo Note</h1>
+        <SortButtonContainer>
+          <SortButton
+            active={sortOption === "asc"}
+            onClick={() => handleSortChange("asc")}
+          >
+            최신순
+          </SortButton>
+          <SortButton
+            active={sortOption === "desc"}
+            onClick={() => handleSortChange("desc")}
+          >
+            오래된순
+          </SortButton>
+          <SortButton
+            active={sortOption === "update"}
+            onClick={() => handleSortChange("update")}
+          >
+            수정순
+          </SortButton>
+        </SortButtonContainer>
         <NoteSearchBar onSearch={handleSearch} />
       </NoteHeader>
-      <SortButtonContainer>
-        <SortButton
-          active={sortOption === "asc"}
-          onClick={() => handleSortChange("asc")}
-        >
-          최신순
-        </SortButton>
-        <SortButton
-          active={sortOption === "desc"}
-          onClick={() => handleSortChange("desc")}
-        >
-          오래된순
-        </SortButton>
-        <SortButton
-          active={sortOption === "update"}
-          onClick={() => handleSortChange("update")}
-        >
-          수정순
-        </SortButton>
-      </SortButtonContainer>
       <NoteGrid>
         {(searchResultNotes && searchResultNotes.length > 0
           ? searchResultNotes
