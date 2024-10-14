@@ -11,6 +11,7 @@ import {
 import { MdOutlineLineWeight } from "react-icons/md";
 import { LuLasso } from "react-icons/lu";
 import ColorPalette from "@components/ColorPalette";
+import canvasStore from "@stores/canvasStore";
 
 const DrawingToolBar = ({
   eraseMode,
@@ -29,9 +30,10 @@ const DrawingToolBar = ({
   onLassoClick,
   lassoMode,
 }) => {
-  const [activeTool, setActiveTool] = useState("pen");
+  // const [activeTool, setActiveTool] = useState("pen");
   const [showSlider, setShowSlider] = useState(false);
   const strokeWidthRef = useRef(null);
+  const { activeTool, setActiveTool } = canvasStore();
   const buttonRefs = {
     pen: useRef(null),
     eraser: useRef(null),

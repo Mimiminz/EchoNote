@@ -17,7 +17,14 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
   const [isPenActive, setIsPenActive] = useState(true);
   const [isEraserActive, setIsEraserActive] = useState(false);
 
-  const { undo, redo, clearCanvasPath, getCanvasPath } = canvasStore.getState();
+  const {
+    undo,
+    redo,
+    clearCanvasPath,
+    getCanvasPath,
+    activeTool,
+    setActiveTool,
+  } = canvasStore();
 
   const toggleLassoMode = () => {
     setLassoMode((prevMode) => {
@@ -41,14 +48,28 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
   const handleEraserClick = () => {
     setEraseMode(true);
     setLassoMode(false);
+    setActiveTool("eraser");
     canvasRef.current?.eraseMode(true);
   };
 
   const handlePenClick = () => {
     setEraseMode(false);
     setLassoMode(false);
+    setActiveTool("pen");
     canvasRef.current?.eraseMode(false);
   };
+
+  useEffect(() => {
+    if (activeTool === "pen") {
+      handlePenClick();
+    } else if (activeTool === "eraser") {
+      handleEraserClick();
+    } else if (activeTool === "lasso") {
+      setEraseMode(false);
+      setLassoMode(true);
+      canvasRef.current?.eraseMode(false);
+    }
+  }, [activeTool, setActiveTool]);
 
   const handleStrokeWidthChange = (event) => {
     setStrokeWidth(+event.target.value);
