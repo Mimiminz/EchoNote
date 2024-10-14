@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.echonote.domain.User.dao.UserRepository;
 import com.echonote.domain.User.entity.User;
 import com.echonote.domain.note.dao.KeywordRepository;
@@ -37,6 +39,9 @@ public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private AmazonS3 amazonS3;
+
+	@Value("${amazon.aws.bucket}")
+	private String bucketName;
 
 	public UrlResponse generatePreSignUrl(String filePath,
 		String bucketName,
@@ -118,7 +123,30 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public void deleteNote(Long noteId) {
+
+		// 노트 객체 찾아내기
+		Note note = noteRepository.findById(noteId)
+			.orElseThrow(() -> new BusinessLogicException(ErrorCode.NOT_FOUND));
+
+		// S3 버킷에서 파일 삭제
+		deleteS3Object(note.getPdf_path());
+		deleteS3Object(note.getRecord_path());
+
 		noteRepository.deleteById(noteId);
+	}
+
+	public void deleteS3Object(String s3Path) {
+		// s3Path가 null 또는 빈 값일 경우 처리
+		if (s3Path == null || s3Path.isEmpty()) {
+			return;
+		}
+
+		// S3 경로에서 객체 키 추출
+		String key = s3Path.split("amazonaws.com/")[1];
+
+		// S3 객체 삭제 요청
+		DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucketName, key);
+		amazonS3.deleteObject(deleteObjectRequest);
 	}
 
 }
