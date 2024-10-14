@@ -11,12 +11,12 @@ public class VoiceSendRequest {
 
 	private String objectUrl;
 
-	private List<PageMovement> pageMovements;
+	private List<PageMovement> pageMovement;
 
 	@Data
 	public class PageMovement {
 		private String timestamp;
-		private int pageNo;
+		private int page;
 	}
 
 }

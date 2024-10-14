@@ -91,7 +91,7 @@ public class VoiceServiceImpl implements VoiceService {
 
 		// 페이지 이동 정보 map에 저장
 		Long noteId = voiceSendRequest.getNoteId();
-		pageMovementStore.put(noteId, voiceSendRequest.getPageMovements());
+		pageMovementStore.put(noteId, voiceSendRequest.getPageMovement());
 
 		// 2. Flask 모델 요청
 		FlaskSendRequest flaskSendRequest = FlaskSendRequest.builder()
@@ -281,7 +281,7 @@ public class VoiceServiceImpl implements VoiceService {
 				} else {
 
 					// 페이지 정보 추가
-					sttList.get(sttIdx).changePageNo(curPageMove.getPageNo());
+					sttList.get(sttIdx).changePageNo(curPageMove.getPage());
 					System.out.println("page number changed");
 
 					sttIdx++;
