@@ -250,7 +250,7 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
                 >
                   <ResultLink
                     onClick={() =>
-                      handleMappingRecord(segment.start, segment.page_no)
+                      handleMappingRecord(segment.start, segment.page)
                     }
                   >
                     {formatTime(parseFloat(segment.start))} ~{" "}
