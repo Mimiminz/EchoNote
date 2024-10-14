@@ -103,7 +103,7 @@ const NewNoteModal = ({ isOpen, onClose }) => {
               placeholder="노트 제목을 입력하세요"
             />
           </div>
-          <p>설정에서 언제든지 새 페이지 스타일을 선택할 수 있습니다.</p>
+          <p>생성할 메모의 PDF를 등록해보세요</p>
 
           <St.UploadButton htmlFor="pdfUpload" onClick={handleFileChange}>
             PDF 파일 선택
@@ -125,7 +125,7 @@ const NewNoteModal = ({ isOpen, onClose }) => {
                 id="tagInput"
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
-                placeholder="태그를 입력하세요 (최대 6자)"
+                placeholder="태그를 입력하세요 (최대 5개)"
               />
               <St.TagButton onClick={handleTagAdd}>추가</St.TagButton>
             </div>
