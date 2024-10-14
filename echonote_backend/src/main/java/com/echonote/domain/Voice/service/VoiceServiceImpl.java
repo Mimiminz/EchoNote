@@ -272,41 +272,18 @@ public class VoiceServiceImpl implements VoiceService {
 		try {
 			// stt와 페이지 이동 로그 합치기
 
-			List<STTRequest> sttList = stt.getResult();
+			List<STTRequest> sttReqList = stt.getResult();
 			List<PageMovement> pageMovement = pageMovementStore.get(stt.getId());
 
-			for (int sttIdx = 0, pageIdx = 0; sttIdx < sttList.size() && pageIdx < pageMovement.size(); ) {
-				STTRequest curStt = sttList.get(sttIdx);
-				PageMovement curPageMove = pageMovement.get(pageIdx);
-
-				if (Float.parseFloat(curStt.getEnd()) <
-					Float.parseFloat(curPageMove.getTimestamp())) {
-
+			int pageIdx = 0;
+			for (STTRequest sttRequest : sttReqList) {
+				// 페이지 이동이 남아있고, 페이지 전환 시점이 문장 시작 시간보다 이른 경우
+				while (pageIdx < pageMovement.size() &&
+					Float.parseFloat(sttRequest.getStart()) >= Float.parseFloat(
+						pageMovement.get(pageIdx).getTimestamp())) {
+					sttRequest.changePage(pageMovement.get(pageIdx).getPage());
 					pageIdx++;
-				} else {
-
-					// 페이지 정보 추가
-					sttList.get(sttIdx).changePage(curPageMove.getPage());
-					System.out.println("page number changed");
-
-					sttIdx++;
-
 				}
-
-				// if (Float.parseFloat(curStt.getStart()) >=
-				// 	Float.parseFloat(curPageMove.getTimestamp())) {
-				//
-				// 	// 페이지 정보 추가
-				// 	sttList.get(sttIdx).changePageNo(curPageMove.getPageNo());
-				// 	System.out.println("page number changed");
-				//
-				// 	sttIdx++;
-				//
-				// } else if (Float.parseFloat(curStt.getEnd()) <
-				// 	Float.parseFloat(curPageMove.getTimestamp())) {
-				//
-				// 	pageIdx++;
-				// }
 			}
 
 			// map의 데이터 삭제
