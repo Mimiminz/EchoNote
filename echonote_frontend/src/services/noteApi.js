@@ -92,3 +92,23 @@ export const S3UploadPdf = async (uploadUrl, file) => {
     throw error;
   }
 };
+
+// 노트 삭제
+export const deleteNote = async (id) => {
+  try {
+    const response = await apiClient.delete(`/note`, {
+      params: {
+        noteId: id, // 쿼리 파라미터로 noteId 전달
+      },
+    });
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.error("Failed to fetch note detail");
+      throw new Error("Failed to fetch note detail");
+    }
+  } catch (error) {
+    console.error("Error fetching note detail:", error);
+    throw error;
+  }
+};

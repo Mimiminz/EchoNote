@@ -47,6 +47,7 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
     currentKeyword,
     searchResults,
     isKeyword,
+    isAnalyzed,
     keywordColor,
   } = useSearchStore();
   const resultRefs = useRef([]);
@@ -256,7 +257,8 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
                     suppressContentEditableWarning={true} // Prevent warning
                     $isEditMode={isEditMode}
                     style={{
-                      fontWeight: segment.anomaly ? "bold" : "normal", // anomaly일 경우 bold 처리
+                      fontWeight:
+                        segment.anomaly && isAnalyzed ? "bold" : "normal", // anomaly일 경우 bold 처리
                     }}
                   >
                     {highlightText(segment.text, index)}{" "}

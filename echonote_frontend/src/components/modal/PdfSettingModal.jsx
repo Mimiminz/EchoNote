@@ -10,11 +10,29 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { exportPdfWithTextAndShapes } from "@services/PDFSave/PdfSave";
 import { useNoteStore } from "@/stores/noteStore";
+import { deleteNote } from "@services/noteApi";
+import { useNavigate } from "react-router-dom";
+import canvasStore from "@stores/canvasStore";
+import shapeStore from "@stores/shapeStore";
+import { useSidebarStore } from "@stores/sideBarStore";
+import drawingTypeStore from "@stores/drawingTypeStore";
+import textStore from "@stores/textStore";
+import pageStore from "@stores/pageStore";
+import Swal from "sweetalert2";
 
 const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
   const [animate, setAnimate] = useState(false);
   const [visible, setVisible] = useState(isOpen);
-  const { pdf_path } = useNoteStore();
+  const { note_id, pdf_path } = useNoteStore();
+  const navigate = useNavigate();
+
+  const { setCurrentPage } = pageStore();
+  const { resetAllDrawings, resetStrockColor } = canvasStore();
+  const { resetAllShapes } = shapeStore();
+  const { resetSidebarStore } = useSidebarStore();
+  const { resetNoteStore } = useNoteStore();
+  const { resetType } = drawingTypeStore();
+  const { resetTextItems } = textStore();
 
   useEffect(() => {
     if (isOpen) {
@@ -41,6 +59,50 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
     }
   };
 
+  const handleDeletePdf = (id) => {
+    Swal.fire({
+      title: "노트를 삭제하시겠습니까?",
+      text: "삭제된 노트는 복원할 수 없어요",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ee4949",
+      cancelButtonColor: "#858585",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteNote(id); // ensure this is awaited properly
+          resetItems();
+          navigate(-1);
+
+          Swal.fire({
+            title: "삭제완료",
+            icon: "success",
+          });
+        } catch (error) {
+          console.error("Error deleting note:", error);
+          Swal.fire({
+            title: "삭제 실패",
+            text: "노트를 삭제하는 동안 문제가 발생했습니다.",
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
+
+  const resetItems = () => {
+    resetTextItems();
+    resetAllShapes();
+    setCurrentPage(1);
+    resetAllDrawings();
+    resetType();
+    resetStrockColor();
+    resetSidebarStore();
+    resetNoteStore();
+  };
+
   return (
     <ModalBackdrop
       className={isOpen ? "modal open" : "modal"}
@@ -61,7 +123,9 @@ const PdfSettingModal = ({ isOpen, onClose, position, toggleAnalyzeModal }) => {
         <ModalList>
           <ModalItem>태그</ModalItem>
           <ModalItem onClick={handleExportPdf}>파일로 저장</ModalItem>
-          <ModalItem>손가락으로 그리기 켜기</ModalItem>
+          <ModalItem onClick={() => handleDeletePdf(note_id)}>
+            메모 삭제
+          </ModalItem>
         </ModalList>
       </ModalContainer>
     </ModalBackdrop>
