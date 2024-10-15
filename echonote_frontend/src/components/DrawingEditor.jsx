@@ -8,7 +8,7 @@ import drawingTypeStore from "@/stores/drawingTypeStore";
 const DrawingEditor = ({ scale, page, readOnly }) => {
   const canvasRef = useRef();
   const [eraseMode, setEraseMode] = useState(false);
-  const [strokeWidth, setStrokeWidth] = useState(5);
+  // const [strokeWidth, setStrokeWidth] = useState(5);
   const [eraserWidth, setEraserWidth] = useState(10);
   const [strokeColor, setStrokeColor] = useState("#000000");
   const [noEdit, setNoEdit] = useState(false);
@@ -17,7 +17,16 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
   const [isPenActive, setIsPenActive] = useState(true);
   const [isEraserActive, setIsEraserActive] = useState(false);
 
-  const { undo, redo, clearCanvasPath, getCanvasPath } = canvasStore.getState();
+  const {
+    undo,
+    redo,
+    clearCanvasPath,
+    getCanvasPath,
+    activeTool,
+    setActiveTool,
+    strokeWidth,
+    setStrokeWidth,
+  } = canvasStore();
 
   const toggleLassoMode = () => {
     setLassoMode((prevMode) => {
@@ -41,14 +50,28 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
   const handleEraserClick = () => {
     setEraseMode(true);
     setLassoMode(false);
+    setActiveTool("eraser");
     canvasRef.current?.eraseMode(true);
   };
 
   const handlePenClick = () => {
     setEraseMode(false);
     setLassoMode(false);
+    setActiveTool("pen");
     canvasRef.current?.eraseMode(false);
   };
+
+  useEffect(() => {
+    if (activeTool === "pen") {
+      handlePenClick();
+    } else if (activeTool === "eraser") {
+      handleEraserClick();
+    } else if (activeTool === "lasso") {
+      setEraseMode(false);
+      setLassoMode(true);
+      canvasRef.current?.eraseMode(false);
+    }
+  }, [activeTool, setActiveTool]);
 
   const handleStrokeWidthChange = (event) => {
     setStrokeWidth(+event.target.value);
@@ -109,7 +132,6 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
       {mode.pen && (
         <DrawingToolBar
           eraseMode={eraseMode}
-          strokeWidth={strokeWidth}
           eraserWidth={eraserWidth}
           strokeColor={strokeColor}
           onPenClick={handlePenClick}
@@ -130,7 +152,6 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
         ref={canvasRef}
         strokeWidth={strokeWidth * scale}
         eraserWidth={eraserWidth * scale}
-        strokeColor={strokeColor}
         eraseMode={eraseMode}
         readOnly={readOnly || noEdit}
         scale={scale}

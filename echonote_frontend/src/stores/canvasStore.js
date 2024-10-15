@@ -7,10 +7,24 @@ const canvasStore = create((set, get) => ({
   undoStacks: {}, // 페이지별 undo 스택
   redoStacks: {}, // 페이지별 redo 스택
   strokeColor: "#000",
+  activeTool: "pen",
+  strokeWidth: 5,
 
   setStrokeColor: (color) => {
     set(() => ({
       strokeColor: color,
+    }));
+  },
+
+  setStrokeWidth: (width) => {
+    set(() => ({
+      strokeWidth: width,
+    }));
+  },
+
+  setActiveTool: (tool) => {
+    set(() => ({
+      activeTool: tool,
     }));
   },
 
@@ -174,6 +188,8 @@ const canvasStore = create((set, get) => ({
     set(() => ({
       savedCanvasPaths: null,
       savedCanvasRecords: null,
+      activeTool: "pen",
+      strokeWidth: 5,
     }));
   },
 }));
