@@ -32,7 +32,7 @@ const DrawingToolBar = ({
   // const [activeTool, setActiveTool] = useState("pen");
   const [showSlider, setShowSlider] = useState(false);
   const strokeWidthRef = useRef(null);
-  const { activeTool, setActiveTool, strokeWidth } = canvasStore();
+  const { activeTool, setActiveTool, strokeWidth, strokeColor } = canvasStore();
   const buttonRefs = {
     pen: useRef(null),
     eraser: useRef(null),
