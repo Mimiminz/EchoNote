@@ -252,7 +252,7 @@ const STTComponent = ({ searchTerm, isEditMode, onSubmit }) => {
       ) : (
         <>
           {sttData && sttData.length > 0 ? (
-            <STTResultList ref={resultListRef}>
+            <STTResultList ref={resultListRef} className="stt-list">
               {sttData.map((segment, index) => (
                 <STTResultItem
                   key={segment.id}
