@@ -16,12 +16,12 @@ import canvasStore from "@stores/canvasStore";
 const DrawingToolBar = ({
   eraseMode,
   eraserWidth,
-  strokeColor,
+  // strokeColor,
   onPenClick,
   onEraserClick,
   onStrokeWidthChange,
   onEraserWidthChange,
-  onStrokeColorChange,
+  // onStrokeColorChange,
   onUndoChange,
   onRedoChange,
   onClearChange,
@@ -109,7 +109,7 @@ const DrawingToolBar = ({
 
   return (
     <St.DrawingToolContainer>
-      <ColorPalette value={strokeColor} onChange={onStrokeColorChange} />
+      <ColorPalette />
 
       {/* 펜 아이콘 */}
       <St.IconButton onClick={handlePenClick} ref={buttonRefs.pen}>

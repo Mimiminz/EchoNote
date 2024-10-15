@@ -10,7 +10,7 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
   const [eraseMode, setEraseMode] = useState(false);
   // const [strokeWidth, setStrokeWidth] = useState(5);
   const [eraserWidth, setEraserWidth] = useState(10);
-  const [strokeColor, setStrokeColor] = useState("#000000");
+  // const [strokeColor, setStrokeColor] = useState("#000000");
   const [noEdit, setNoEdit] = useState(false);
   const { mode } = drawingTypeStore();
   const [lassoMode, setLassoMode] = useState(false);
@@ -26,6 +26,8 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
     setActiveTool,
     strokeWidth,
     setStrokeWidth,
+    // strokeColor,
+    // setStrokeColor,
   } = canvasStore();
 
   const toggleLassoMode = () => {
@@ -81,9 +83,9 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
     setEraserWidth(+event.target.value);
   };
 
-  const handleStrokeColorChange = (color) => {
-    setStrokeColor(color);
-  };
+  // const handleStrokeColorChange = (color) => {
+  //   setStrokeColor(color);
+  // };
 
   const loadCanvasPaths = () => {
     const savedPaths = getCanvasPath(page);
@@ -133,12 +135,12 @@ const DrawingEditor = ({ scale, page, readOnly }) => {
         <DrawingToolBar
           eraseMode={eraseMode}
           eraserWidth={eraserWidth}
-          strokeColor={strokeColor}
+          // strokeColor={strokeColor}
           onPenClick={handlePenClick}
           onEraserClick={handleEraserClick}
           onStrokeWidthChange={handleStrokeWidthChange}
           onEraserWidthChange={handleEraserWidthChange}
-          onStrokeColorChange={handleStrokeColorChange}
+          // onStrokeColorChange={handleStrokeColorChange}
           onUndoChange={handleUndoClick}
           onRedoChange={handleRedoClick}
           onClearChange={handleClearClick}
