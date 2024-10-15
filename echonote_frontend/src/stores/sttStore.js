@@ -9,6 +9,12 @@ export const useSTTStore = create((set, get) => ({
 
   setResultRefs: (refs) => set({ resultRefs: refs }),
 
+  resetSTTStore: () =>
+    set({
+      sttData: [],
+      resultRefs: [],
+    }),
+
   // STT 시작 시간으로 해당 인덱스를 찾는 함수
   findSTTIndex: (time) => {
     const sttData = get().sttData;

@@ -30,6 +30,7 @@ import textStore from "@stores/textStore";
 import Dropdown from "@components/common/Dropdown";
 import canvasStore from "@stores/canvasStore";
 import shapeStore from "@stores/shapeStore";
+import { useSTTStore } from "@stores/sttStore";
 import { updateMemo, saveMemo } from "@services/memoApi";
 
 const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
@@ -56,6 +57,8 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
 
   const { nextPage, prevPage, zoomIn, zoomOut, setCurrentPage } = pageStore();
   const { fontProperty, setFontSize, resetTextItems, textItems } = textStore();
+  const { resetSTTStore } = useSTTStore();
+
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isPdfSettingModalOpen, setIsPdfSettingModalOpen] = useState(false);
   const [isAnalyzeModalOpen, setIsAnalyzeModalOpen] = useState(false);
@@ -86,6 +89,7 @@ const ToolBar = ({ onToggleDrawingEditor, onToggleToolBar, noteId }) => {
     resetStrockColor();
     resetSidebarStore();
     resetNoteStore();
+    resetSTTStore();
   };
 
   //도형모드 off -> 사각형 모드 -> 원 모드 -> 도형모드 off
