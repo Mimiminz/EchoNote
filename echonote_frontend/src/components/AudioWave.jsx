@@ -58,8 +58,13 @@ const AudioWave = () => {
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
-    showConfirmButton: true,
+    showConfirmButton: false,
+    timer: 2000,
     timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
   });
 
   const resetTimestamp = () => {
@@ -101,11 +106,16 @@ const AudioWave = () => {
 
       recPlugin.on("record-end", async (blob) => {
         if (blob.size === 0) {
-          alert("녹음이 너무 짧습니다! 새로운 녹음이 진행됩니다.");
+          Toast.fire({
+            icon: "warning",
+            title: "녹음 시간이 너무 짧아요",
+            text: "새로운 녹음을 다시 시작합니다",
+          });
           resetTimestamp();
           record.startRecording();
           return;
         }
+
         setSTTStatus("processing");
         // 녹음된 Blob 객체로부터 오디오 URL을 생성하고 상태에 저장
         const recordedUrl = URL.createObjectURL(blob);
@@ -159,13 +169,28 @@ const AudioWave = () => {
     wavesurfer.playPause();
   };
 
-  const toggleStartStop = () => {
+  const toggleStartStop = async () => {
     if (record.isPaused()) {
       record.resumeRecording();
     } else if (record.isRecording()) {
       record.pauseRecording();
     } else {
-      handleStartStopRecording();
+      const devices = await RecordPlugin.getAvailableAudioDevices();
+      const mediaDevice = devices.find(
+        (device) =>
+          device.kind === "audioinput" && device.label.includes("Media")
+      );
+
+      if (mediaDevice) {
+        // 미디어 장치를 선택해서 녹음을 시작
+        record.startRecording({ deviceId: mediaDevice.deviceId });
+      } else {
+        record.startRecording();
+      }
+      // const deviceId = devices[0]?.deviceId;
+      // record.startRecording({ deviceId });
+
+      // handleStartStopRecording();
     }
 
     setIsRecording(!isRecording);
@@ -180,8 +205,8 @@ const AudioWave = () => {
       });
       return;
     }
-    const devices = await RecordPlugin.getAvailableAudioDevices();
-    const deviceId = devices[0]?.deviceId;
+    // const devices = await RecordPlugin.getAvailableAudioDevices();
+    // const deviceId = devices[0]?.deviceId;
 
     try {
       if (recordTime >= 1) {
@@ -190,7 +215,7 @@ const AudioWave = () => {
         setRecordPath(null);
         setRecordTime(0);
         resetTimestamp();
-        record.startRecording({ deviceId });
+        // record.startRecording({ deviceId });
       }
     } catch (error) {
       console.error("Error accessing microphone or starting recording", error);
