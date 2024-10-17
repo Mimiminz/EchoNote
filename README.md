@@ -1,4 +1,4 @@
-[ 삼성 청년 SW 아카데미(SSAFY) 11기 - 특화 우수 프로젝트 ]
+### 🏆 **삼성 청년 SW 아카데미(SSAFY) 11기 - 특화 우수 프로젝트**
 
 # 📝Echo Note
 
@@ -51,19 +51,20 @@
 
 ## ⚒️ 기술 스택
 
-### 🖥️ Client
+## 🖥️ Client
 [![Client Skills](https://skillicons.dev/icons?i=react,javascript,styledcomponents,vscode&theme=dark)](https://skillicons.dev)
 
-### 🖥️ Server
-[![Server Skills](https://skillicons.dev/icons?i=java,spring,mysql,mongo,redis,aws,idea&theme=dark)](https://skillicons.dev)
+## 🖥️ Server
+[![Server Skills](https://skillicons.dev/icons?i=java,spring,mysql,mongo,aws,idea&theme=dark)](https://skillicons.dev)
 
-### 🖥️ AI
+## 🖥️ AI
 [![AI Skills](https://skillicons.dev/icons?i=&theme=dark)](https://skillicons.dev)
 
-### 🖥️ Devops
+
+## 🖥️ Devops
 [![Data Skills](https://skillicons.dev/icons?i=aws,docker,jenkins,nginx&theme=dark)](https://skillicons.dev)
 
-### 🖥️ Common
+## 🖥️ Common
 [![Common Skills](https://skillicons.dev/icons?i=notion,figma,git,gitlab&theme=dark)](https://skillicons.dev)
 
 ***
