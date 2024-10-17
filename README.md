@@ -1,3 +1,5 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=BDBDC8&height=200&section=header&text=Echo%20Note&fontSize=70&animation=fadeIn" />
+
 ### 🏆 **삼성 청년 SW 아카데미(SSAFY) 11기 - 특화 우수 프로젝트**
 
 # 📝Echo Note
