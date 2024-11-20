@@ -38,13 +38,13 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 <table>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/업로드_제목PDF선택.gif" alt="제목 입력 및 PDF 선택" >
-        <p><center><strong>제목 입력 및 PDF 선택</strong></center></p>
+        <p><strong>제목 입력 및 PDF 선택</strong></center></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/업로드_태그추가.gif" alt="태그 추가" >
-        <p><center><strong>태그 추가</strong></center></p>
+        <p><strong>태그 추가</strong></center></p>
     </td>
 </tr>
 </table>
@@ -57,23 +57,23 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 <table>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/필기.gif" alt="펜툴 필기" >
-        <p><center><strong>펜툴</strong></center></p>
+        <p><strong>펜툴</strong></center></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/필기_지우개.gif" alt="펜툴 지우개" >
-        <p><center><strong>지우개</strong></center></p>
+        <p><strong>지우개</strong></center></p>
     </td>
 </tr>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/필기_실행취소다시실행전체삭제.gif" alt="전체 삭제 및 실행 취소 다시 실행" >
-        <p><center><strong>실행 취소 | 다시 실행 | 전체 삭제</strong></center></p>
+        <p><strong>실행 취소 | 다시 실행 | 전체 삭제</strong></center></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/필기_스크립트매핑.gif" alt="필기와 스크립트 타임라인 매핑" >
-        <p><center><strong>필기와 스크립트 타임라인 매핑</strong></center></p>
+        <p><strong>필기와 스크립트 타임라인 매핑</strong></p>
     </td>
 </tr>
 </table>
@@ -84,23 +84,23 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 <table>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/텍스트_입력.gif" alt="텍스트 입력" >
-        <p><center><strong>텍스트 입력</strong></center></p>
+        <p><strong>텍스트 입력</strong></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/텍스트_편집.gif" alt="텍스트 수정" >
-        <p><center><strong>텍스트 편집</strong></center></p>
+        <p><strong>텍스트 편집</strong></p>
     </td>
 </tr>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/텍스트_삭제.gif" alt="텍스트 삭제" >
-        <p><center><strong>텍스트 박스 삭제</strong></center></p>
+        <p><strong>텍스트 박스 삭제</strong></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/텍스트녹음_매핑.gif" alt="텍스트와 녹음 매핑" >
-        <p><center><strong>텍스트와 녹음본 타임라인 매핑</strong></center></p>
+        <p><strong>텍스트와 녹음본 타임라인 매핑</strong></p>
     </td>
 <tr>
 </table>
@@ -111,23 +111,23 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 <table>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/도형그리기.gif" alt="도형 그리기" >
-        <p><center><strong>도형 그리기</strong></center></p>
+        <p><strong>도형 그리기</strong></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/도형지우기.gif" alt="도형 지우기" >
-        <p><center><strong>도형 지우기</strong></center></p>
+        <p><strong>도형 지우기</strong></p>
     </td>
 </tr>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/사각형그리기.gif" alt="녹음 중 도형 그리기" >
-        <p><center><strong>녹음 중 도형 그리기</strong></center></p>
+        <p><strong>녹음 중 도형 그리기</strong></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/도형매핑.gif" alt="도형과 녹음본 매핑" >
-        <p><center><strong>도형과 녹음본 타임라인 매핑</strong></center></p>
+        <p><strong>도형과 녹음본 타임라인 매핑</strong></p>
     </td>
 </tr>
 </table>
@@ -150,13 +150,13 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 <table>
 <tr>
-    <td>
+    <td align="center">
         <img src="./docs/assets/키워드강조.gif">
-        <p><center><strong>키워드 강조</strong></center></p>
+        <p><strong>키워드 강조</strong></p>
     </td>
-    <td>
+    <td align="center">
         <img src="./docs/assets/강조표시.gif">
-        <p><center><strong>음성 분석 하이라이트</strong></center></p>
+        <p><strong>음성 분석 하이라이트</strong></p>
     </td>
 </tr>
 </table>
