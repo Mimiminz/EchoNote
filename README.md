@@ -189,11 +189,11 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 ## 🖥️ Server
 
-[![Server Skills](https://skillicons.dev/icons?i=java,spring,mysql,mongo,aws,idea&theme=dark)](https://skillicons.dev)
+[![Server Skills](https://skillicons.dev/icons?i=java,spring,flask,mysql,mongo,aws,idea&theme=dark)](https://skillicons.dev)
 
 ## 🖥️ AI
 
-[![AI Skills](https://skillicons.dev/icons?i=&theme=dark)](https://skillicons.dev)
+[![AI Skills](https://skillicons.dev/icons?i=py,anaconda,tensorflow,pytorch,mongodb&theme=dark)](https://skillicons.dev)
 
 ## 🖥️ Devops
 
