@@ -36,16 +36,18 @@
 
 PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 있습니다.
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align:center; font-weight:600;">
-    <div>
+<table>
+<tr>
+    <td align="center">
         <img src="./docs/assets/업로드_제목PDF선택.gif" alt="제목 입력 및 PDF 선택" >
-        <p>제목 입력 및 PDF 선택</p>
-    </div>
-    <div>
+        <p><strong>제목 입력 및 PDF 선택</strong></center></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/업로드_태그추가.gif" alt="태그 추가" >
-        <p>태그 추가</p>
-    </div>
-</div>
+        <p><strong>태그 추가</strong></center></p>
+    </td>
+</tr>
+</table>
 
 ---
 
@@ -53,70 +55,82 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 펜툴을 이용하여 필기를 진행하고 녹음본 스크립트와 타임라인을 매핑할 수 있습니다.
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align:center; font-weight:600;">
-    <div>
+<table>
+<tr>
+    <td align="center">
         <img src="./docs/assets/필기.gif" alt="펜툴 필기" >
-        <p>펜툴</p>
-    </div>
-    <div>
+        <p><strong>펜툴</strong></center></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/필기_지우개.gif" alt="펜툴 지우개" >
-        <p>지우개</p>
-    </div>
-    <div>
+        <p><strong>지우개</strong></center></p>
+    </td>
+</tr>
+<tr>
+    <td align="center">
         <img src="./docs/assets/필기_실행취소다시실행전체삭제.gif" alt="전체 삭제 및 실행 취소 다시 실행" >
-        <p>실행 취소 | 다시 실행 | 전체 삭제</p>
-    </div>
-    <div>
+        <p><strong>실행 취소 | 다시 실행 | 전체 삭제</strong></center></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/필기_스크립트매핑.gif" alt="필기와 스크립트 타임라인 매핑" >
-        <p>필기와 스크립트 타임라인 매핑</p>
-    </div>
-</div>
+        <p><strong>필기와 스크립트 타임라인 매핑</strong></p>
+    </td>
+</tr>
+</table>
 
 ### 🆎 텍스트
 
 텍스트 박스를 추가하여 필기를 진행하고 녹음본 타임라인과 매핑할 수 있습니다.
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align:center; font-weight:600;">
-    <div>
+<table>
+<tr>
+    <td align="center">
         <img src="./docs/assets/텍스트_입력.gif" alt="텍스트 입력" >
-        <p>텍스트 입력</p>
-    </div>
-    <div>
+        <p><strong>텍스트 입력</strong></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/텍스트_편집.gif" alt="텍스트 수정" >
-        <p>텍스트 편집</p>
-    </div>
-    <div>
+        <p><strong>텍스트 편집</strong></p>
+    </td>
+</tr>
+<tr>
+    <td align="center">
         <img src="./docs/assets/텍스트_삭제.gif" alt="텍스트 삭제" >
-        <p>텍스트 박스 삭제</p>
-    </div>
-    <div>
+        <p><strong>텍스트 박스 삭제</strong></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/텍스트녹음_매핑.gif" alt="텍스트와 녹음 매핑" >
-        <p>텍스트와 녹음본 타임라인 매핑</p>
-    </div>
-</div>
+        <p><strong>텍스트와 녹음본 타임라인 매핑</strong></p>
+    </td>
+<tr>
+</table>
 
 ### 🔷 도형
 
 도형을 그리고 녹음본 타임라인과 매핑할 수 있습니다.
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align:center; font-weight:600;">
-    <div>
+<table>
+<tr>
+    <td align="center">
         <img src="./docs/assets/도형그리기.gif" alt="도형 그리기" >
-        <p>도형 그리기</p>
-    </div>
-    <div>
+        <p><strong>도형 그리기</strong></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/도형지우기.gif" alt="도형 지우기" >
-        <p>도형 지우기</p>
-    </div>
-    <div>
+        <p><strong>도형 지우기</strong></p>
+    </td>
+</tr>
+<tr>
+    <td align="center">
         <img src="./docs/assets/사각형그리기.gif" alt="녹음 중 도형 그리기" >
-        <p>녹음 중 도형 그리기</p>
-    </div>
-    <div>
+        <p><strong>녹음 중 도형 그리기</strong></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/도형매핑.gif" alt="도형과 녹음본 매핑" >
-        <p>도형과 녹음본 타임라인 매핑</p>
-    </div>
-</div>
+        <p><strong>도형과 녹음본 타임라인 매핑</strong></p>
+    </td>
+</tr>
+</table>
 
 ---
 
@@ -134,16 +148,18 @@ PDF 파일을 업로드하고 강조 표시를 받을 태그를 추가할 수 �
 
 ### ❗ 하이라이트
 
-<div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 10px; text-align:center; font-weight:600;">
-    <div>
+<table>
+<tr>
+    <td align="center">
         <img src="./docs/assets/키워드강조.gif">
-        <p>키워드 강조</p>
-    </div>
-    <div>
+        <p><strong>키워드 강조</strong></p>
+    </td>
+    <td align="center">
         <img src="./docs/assets/강조표시.gif">
-        <p>음성 분석 하이라이트</p>
-    </div>
-</div>
+        <p><strong>음성 분석 하이라이트</strong></p>
+    </td>
+</tr>
+</table>
 
 ---
 
